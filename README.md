@@ -1,8 +1,7 @@
-# TrueLearn-project-website
+# TrueLearn Website
+This repository contains all of the code for the TrueLearn project website for the truelearn python library.
 
+## Dev Info
 Uses Bootstrap version 5.2.3
 
-Template Name: Reveal
-Template URL: https://bootstrapmade.com/reveal-bootstrap-corporate-template/
-Author: BootstrapMade.com
-License: https://bootstrapmade.com/license/
+
