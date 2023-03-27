@@ -144,7 +144,7 @@ h6 {
 }
 
 #header #logo h1 a {
-  color: #0c2e8a;
+  color: #090088;
 }
 
 #header #logo h1 a span {
@@ -291,7 +291,7 @@ h6 {
 * Mobile Navigation 
 */
 .mobile-nav-toggle {
-  color: #0c2e8a;
+  color: #090088;
   font-size: 28px;
   cursor: pointer;
   display: none;
@@ -348,7 +348,7 @@ h6 {
 .navbar-mobile a:focus {
   padding: 10px 20px;
   font-size: 15px;
-  color: #0c2e8a;
+  color: #090088;
 }
 
 .navbar-mobile a:hover,
@@ -423,7 +423,7 @@ h6 {
 }
 
 #hero .hero-content h2 {
-  color: #0c2e8a;
+  color: #090088;
   margin-bottom: 30px;
   font-size: 64px;
   font-weight: 700;
@@ -455,13 +455,13 @@ h6 {
 }
 
 #hero .hero-content .btn-get-started {
-  background: #0c2e8a;
-  border: 2px solid #0c2e8a;
+  background: #090088;
+  border: 2px solid #090088;
 }
 
 #hero .hero-content .btn-get-started:hover {
   background: none;
-  color: #0c2e8a;
+  color: #090088;
 }
 
 #hero .hero-content .btn-projects {
@@ -515,7 +515,7 @@ section {
 
 .section-header h2 {
   font-size: 32px;
-  color: #0c2e8a;
+  color: #090088;
   text-transform: uppercase;
   font-weight: 700;
   position: relative;
@@ -620,7 +620,7 @@ section {
 }
 
 #about .content h2 {
-  color: #0c2e8a;
+  color: #090088;
   font-weight: 700;
   font-size: 36px;
   font-family: "Raleway", sans-serif;
@@ -691,7 +691,7 @@ section {
 }
 
 #services .box .icon i:before {
-  background: #0c2e8a;
+  background: #090088;
   background: linear-gradient(45deg, #50d8af 0%, #a3ebd5 100%);
   background-clip: border-box;
   -webkit-background-clip: text;
@@ -1307,5 +1307,5 @@ section {
 }
 
 #footer .credits a {
-  color: #0c2e8a;
+  color: #090088;
 }
