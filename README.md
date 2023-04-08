@@ -1,7 +1,8 @@
-# TrueLearn Website
-This repository contains all of the code for the TrueLearn website.
+[![TrueLearn](assets/img/logos/TrueLearn-Logo.png)](https://truelearnai.github.io)
 
-## Dev Info
-Uses Bootstrap version 5.2.3
+This repository contains the code for the TrueLearn website. This is not
+the documentation for the TrueLearn library.
+
+*Uses Bootstrap version 5.2.3*
 
 
