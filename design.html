@@ -9,8 +9,8 @@
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="assets/img/TL-favicon.png" rel="icon">
-    <link href="assets/img/TL-logo.png" rel="apple-touch-icon">
+    <link href="assets/img/logos/TL-favicon.png" rel="icon">
+    <link href="assets/img/logos/TL-logo.png" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800|Montserrat:300,400,700" rel="stylesheet">
@@ -64,7 +64,7 @@
                 <li><a class="nav-link" href="testing.html">Testing</a></li>
                 <li><a class="nav-link" href="evaluation.html">Evaluation</a></li>
 
-                <li class="dropdown"><a href="appendix.html"><span>Appendices</span><i class="bi bi-chevron-down"></i></a>
+                <li class="dropdown"><a href="appendices.html"><span>Appendices</span><i class="bi bi-chevron-down"></i></a>
                     <ul>
                         <li><a class="nav-link scrollto" href="#">Documentation</a> </li>
                         <li><a class="nav-link scrollto" href="#">Development Blog</a></li>
@@ -80,12 +80,20 @@
     </div>
 </header><!-- End Header -->
 
+<!-- ======= Banner ======= -->
+<section id="banner">
+    <div class="banner-content" data-aos="fade-up">
+        <h2>System Design</h2>
+    </div>
+</section>
+<!-- End Banner -->
+
 <main>
     <section id="architecture">
         <div class="container" data-aos="fade-up">
             <div class="section-header">
                 <h2>System Architecture</h2>
-                <img src="assets/img/architecture.png" class="img-fluid" alt="">
+                <img src="assets/img/system-design/architecture.png" class="img-fluid" alt="">
                 <p> To utilise the TrueLearn library for modeling users and predicting their engagement, developers need to convert the raw text data into Wikipedia topics using truelearn.preprocessing. Once the topics are extracted, developers can initialise an EventModel object using truelearn.models. They can then use this model and a label indicating the learner's engagement in the given event to train the classifier in truelearn.learning. </p>
                 <br><p>Internally, the classifier uses information from events and labels to update the LearnerModel, which can be used for interactive visualisations via truelearn.utils.visualisations. These visualisations help learners reflect on their learning. In addition, the updated LearnerModel allows the classifier to make accurate predictions about the learner's engagement in future events. </p>
                 <br><p>Developers can also use the PEEK dataset, a large novel dataset on learner engagement with educational videos, through truelearn.datasets to experiment with TrueLearn and apply different metrics defined in truelearn.utils.metrics to evaluate the classifier's performance. </p>
@@ -98,7 +106,7 @@
                 <h2>Library Structure</h2>
 
                 <p>The TrueLearn library is designed to be modular and extensible. Developers can easily add new features to the library by creating new classes that inherit from the base classes in each of the respective modules, which are listed below:</p>
-                <div class="text-center"><img src="assets/img/structure.png" class="img-fluid" alt=""></div>
+                <div class="text-center"><img src="assets/img/system-design/structure.png" class="img-fluid" alt=""></div>
                 <ul>
                     <li><strong>truelearn.datasets</strong>: <br>Contains the functions to download and use the PEEK dataset.</li>
                     <li><strong>truelearn.learning</strong>: <br>Contains the implementation of all TrueLearn classifiers.</li>
@@ -179,7 +187,6 @@
 <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
 <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
 <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-<script src="assets/vendor/php-email-form/validate.js"></script>
 
 <!-- Template Main JS File -->
 <script src="assets/js/main.js"></script>
