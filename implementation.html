@@ -89,657 +89,308 @@
 </section>
 <!-- End Banner -->
 <main>
-
+<section id="implementation">
     <div class="container" data-aos="fade-up">
         <div class = "section-header">
+            <h2 id="model-implementation">Models</h2>
+            <p>Models of the learner and learning events are essential parts of the TrueLearn library as they form the basis of the classification and prediction algorithms. These representations are found in&nbsp;<code>truelearn.models</code>&nbsp;.</p>
+        </div>
+        <div class = "row">
+            <div>
+                <h3>Representing Knowledge</h3>
+                <p>The Knowledge Component (KC) is the atomic unit of knowledge used in the TrueLearn library. It represents a Wikipedia topic with an associated <strong>mean</strong> and <strong>variance</strong>. The mean represents the estimated skill associated with that KC. The variance represents the confidence of the estimation.</p>
+            </div>
+            <div class = "col-lg-3"></div>
+            <div class = "col-lg-6 content">
+                <img src="assets/img/implementation/kc.png" class="img-fluid" alt="">
+            </div>
+            <div class = "col-lg-3"></div>
 
-    <h1 id="implementation">Implementation</h1>
-    <h2 id="model-implementation">Model Implementation</h2>
-    <p>Models of learner and learning events are essential parts of the
-        truelearn library. Inside truelearn, there is a sub-package
-        <code>truelearn.models</code> that implements the learner and event
-        model.</p>
-    <h3 id="impl.-overview">Impl. Overview</h3>
-    <ol type="1">
-        <li>represent knowledge</li>
-    </ol>
-    <p>The Knowledge Component (KC) is the atomic unit of knowledge used in
-        the truelearn library. It represents a Wikipedia topic with an
-        associated <strong>mean</strong> and <strong>variance</strong>. The mean
-        represents the estimated skill associated with that KC. The variance
-        represents the confidence of the estimation.</p>
-    <div class="sourceCode" id="cb1"><pre
-            class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> KnowledgeComponent:</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    ...</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># an optional string that</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># stores the title of the topic</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> title(<span class="va">self</span>) <span class="op">-&gt;</span> Optional[<span class="bu">str</span>]:</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        ...</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># an optional description of the topic</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> description(<span class="va">self</span>) <span class="op">-&gt;</span> Optional[<span class="bu">str</span>]:</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        ...</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># an optional string that is the url</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># of the topic</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> url(<span class="va">self</span>) <span class="op">-&gt;</span> Optional[<span class="bu">str</span>]:</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        ...</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> mean(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        ...</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> variance(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        ...</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># stores the time when the KC is updated</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># useful for classifiers that utilize time information</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> timestamp(<span class="va">self</span>) <span class="op">-&gt;</span> Optional[<span class="bu">float</span>]:</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        ...</span></code></pre></div>
-    <p>As KC is the atomic unit of knowledge, we design a class
-        <code>Knowledge</code> to group and store KCs by their
-        <code>id</code>.</p>
-    <div class="sourceCode" id="cb2"><pre
-            class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Knowledge class version 1</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Knowledge:</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, ...) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.__knowledge <span class="op">=</span> {<span class="bu">id</span>: KnowledgeComponent}</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> get_kc(</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>, topic_id: Hashable, default: KnowledgeComponent</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    ) <span class="op">-&gt;</span> KnowledgeComponent:</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        ...</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> update_kc(<span class="va">self</span>, topic_id: Hashable, kc: KnowledgeComponent) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        ...</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># the two methods below allow developers to</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># iterate over the knowledge object to examine</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># the KCs inside</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> topic_kc_pairs(</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>,</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    ) <span class="op">-&gt;</span> Iterable[Tuple[Hashable, KnowledgeComponent]]:</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>        ...</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> knowledge_components(<span class="va">self</span>) <span class="op">-&gt;</span> Iterable[KnowledgeComponent]:</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        ...</span></code></pre></div>
-    <p>The <code>Knowledge</code> class is used to model the learner and
-        event.</p>
-    <div class="sourceCode" id="cb3"><pre
-            class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="at">@dataclasses.dataclass</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> EventModel:</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    knowledge: Knowledge <span class="op">=</span> dataclasses.field(default_factory<span class="op">=</span>Knowledge)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    ...</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="at">@dataclasses.dataclass</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> LearnerModel:</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    knowledge: Knowledge <span class="op">=</span> dataclasses.field(default_factory<span class="op">=</span>Knowledge)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    ...</span></code></pre></div>
-    <p>For the learner, the KC in <code>Knowledge</code> estimates how well
-        the learner knows about this topic. For the event, the KC in
-        <code>knowledge</code> estimates how well the learning event covers the
-        topic.</p>
-    <ol start="2" type="1">
-        <li>extensible KC</li>
-    </ol>
-    <p>To ensure developers can freely extend the KC class based on their
-        application, we avoid referring to <code>KnowledgeComponent</code>
-        directly in <code>Knowledge</code>. Instead, we define an interface
-        <code>BaseKnowledgeComponent</code> that specifies the public APIs for
-        all KCs.</p>
-    <div class="sourceCode" id="cb4"><pre
-            class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> BaseKnowledgeComponent(Protocol):</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">@abstractmethod</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> mean(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        ...</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">@abstractmethod</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> variance(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        ...</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">@abstractmethod</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> timestamp(<span class="va">self</span>) <span class="op">-&gt;</span> Optional[<span class="bu">float</span>]:</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        ...</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    ...</span></code></pre></div>
-    <p>With the interface above, the implementation of
-        <code>Knowledge</code> does not need to refer to any concrete
-        implementation.</p>
-    <div class="sourceCode" id="cb5"><pre
-            class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># final Knowledge class</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># all the methods refer to BaseKnowledgeComponent now</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Knowledge:</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    ...</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> get_kc(</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>, topic_id: Hashable, default: BaseKnowledgeComponent</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    ) <span class="op">-&gt;</span> BaseKnowledgeComponent:</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        ...</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> update_kc(<span class="va">self</span>, topic_id: Hashable, kc: BaseKnowledgeComponent) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        ...</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> topic_kc_pairs(</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>,</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    ) <span class="op">-&gt;</span> Iterable[Tuple[Hashable, BaseKnowledgeComponent]]:</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        ...</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> knowledge_components(<span class="va">self</span>) <span class="op">-&gt;</span> Iterable[BaseKnowledgeComponent]:</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>        ...</span></code></pre></div>
-    <ol start="3" type="1">
-        <li>update and transfer knowledge</li>
-    </ol>
-    <p>As a family of Bayesian algorithms, truelearn classifiers, which
-        utilize the <code>truelearn.models</code>, need to update the prior
-        estimation of the existing KCs and create new KCs in the learner model
-        based on the given learning event.</p>
-    <p>Thus, we specify two additional APIs in
-        <code>BaseKnowledgeComponent</code> that all KCs need to implement.</p>
-    <div class="sourceCode" id="cb6"><pre
-            class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> BaseKnowledgeComponent(Protocol):</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># update the existing KC</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">@abstractmethod</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> update(<span class="va">self</span>, ...) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        ...</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># clone the KC</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># so, KC can be transferred from learning events to learner model</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">@abstractmethod</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> clone(<span class="va">self</span>, ...) <span class="op">-&gt;</span> Self:</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        ...</span></code></pre></div>
-    <h2 id="classifier-implementation">Classifier Implementation</h2>
-    <p>The <code>truelearn.learning</code> sub-package implements all the
-        classifiers in the truelearn library.</p>
-    <h3 id="dependencies">Dependencies</h3>
-    <ul>
-        <li><p>trueskill: a rating system among game players. It was developed
-            by Microsoft Research and has been used on Xbox LIVE for ranking and
-            matchmaking services. This system quantifies players’ TRUE skill points
-            by the Bayesian inference algorithm.</p></li>
-        <li><p>mpmath: a free (BSD licensed) Python library for real and complex
-            floating-point arithmetic with arbitrary precision.</p></li>
-    </ul>
-    <h3 id="impl.-overview-1">Impl. Overview</h3>
-    <ol type="1">
-        <li>public interface walk-through</li>
-    </ol>
-    <p>Based on what we outlined in our study, we designed a
-        <code>BaseClassifier</code> class to ensure a consistent interface
-        across all our classifiers.</p>
-    <p>The class <code>BaseClassifier</code> follows the naming convention
-        of the scikit-learn library:</p>
-    <ul>
-        <li>The <code>fit</code> method is used to train the classifier</li>
-        <li>The <code>predict</code> and <code>predict_proba</code> methods use
-            the classifier to make predictions.</li>
-        <li>The <code>get_params</code> and <code>set_params</code> methods are
-            used to get or set the parameters of the classifier.</li>
-    </ul>
-    <div class="sourceCode" id="cb7"><pre
-            class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> BaseClassifier(ABC):</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">@abstractmethod</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> fit(<span class="va">self</span>, x: EventModel, y: <span class="bu">bool</span>) <span class="op">-&gt;</span> Self:</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        ...</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">@abstractmethod</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> predict(<span class="va">self</span>, x: EventModel) <span class="op">-&gt;</span> <span class="bu">bool</span>:</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        ...</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">@abstractmethod</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> predict_proba(<span class="va">self</span>, x: EventModel) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        ...</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">@final</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> get_params(<span class="va">self</span>, ...) <span class="op">-&gt;</span> Dict[<span class="bu">str</span>, Any]:</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>        ...</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">@final</span></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> set_params(<span class="va">self</span>, <span class="op">**</span>args) <span class="op">-&gt;</span> Self:</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>        ...</span></code></pre></div>
-    <ol start="2" type="1">
-        <li>define parameter constraints</li>
-    </ol>
-    <p>When the developer initializes the classifier, they need to pass in
-        the parameters for the classifier. Then, the classifier implementor
-        usually needs to implement checks inside classifiers to verify that the
-        given parameters have the correct type and value. To simplify this
-        process and provide a simple yet powerful way to validate parameters, we
-        used parameter constraints.</p>
-    <p>There are three kinds of ways to express different constraints on
-        parameters. <code>TypeConstraint</code> ensures the type of the
-        parameters must match one of the types in the
-        <code>TypeConstraint</code> class. <code>ValueConstraint</code> checks
-        if the value of the parameters matches one of the values in the
-        <code>ValueConstraint</code> class. <code>FuncConstraint</code> ensures
-        that the parameters satisfy some user-defined functions.</p>
-    <div class="sourceCode" id="cb8"><pre
-            class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> TypeConstraint:</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, <span class="op">*</span>type_constraints: <span class="bu">type</span>):</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.type_constraints <span class="op">=</span> type_constraints</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> satisfies(<span class="va">self</span>, obj: BaseClassifier, param_name: <span class="bu">str</span>):</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        param_value <span class="op">=</span> <span class="bu">getattr</span>(obj, obj._PARAM_PREFIX <span class="op">+</span> param_name)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">type</span>(param_value) <span class="kw">not</span> <span class="kw">in</span> <span class="va">self</span>.type_constraints:</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>            param_classname_expected <span class="op">=</span> <span class="bu">list</span>(</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>                <span class="bu">map</span>(<span class="kw">lambda</span> cls: cls.<span class="va">__name__</span>, <span class="va">self</span>.type_constraints)</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>            )</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">TypeError</span>(</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>                ...</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>            )</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ValueConstraint:</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, <span class="op">*</span>value_constraints: Any):</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.value_constraints <span class="op">=</span> value_constraints</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> satisfies(<span class="va">self</span>, obj: BaseClassifier, param_name: <span class="bu">str</span>):</span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>        param_value <span class="op">=</span> <span class="bu">getattr</span>(obj, obj._PARAM_PREFIX <span class="op">+</span> param_name)</span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> param_value <span class="kw">not</span> <span class="kw">in</span> <span class="va">self</span>.value_constraints:</span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(</span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>                ...</span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>            )</span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> FuncConstraint:</span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, <span class="op">*</span>func_constraints: Callable[[BaseClassifier, <span class="bu">str</span>], <span class="va">None</span>]):</span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.func_constraints <span class="op">=</span> func_constraints</span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> satisfies(<span class="va">self</span>, obj: BaseClassifier, param_name: <span class="bu">str</span>):</span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> fn <span class="kw">in</span> <span class="va">self</span>.func_constraints:</span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>            fn(obj, param_name)</span></code></pre></div>
-    <p>Then, in all classifiers, we define a class attribute
-        <code>_parameter_constraints</code>, which maps parameter names to a
-        constraint or a list of constraints.</p>
-    <div class="sourceCode" id="cb9"><pre
-            class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>_parameter_constraints: Dict[<span class="bu">str</span>, Any] <span class="op">=</span> {</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">**</span>BaseClassifier._parameter_constraints,</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;learner_model&quot;</span>: TypeConstraint(LearnerModel),</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;threshold&quot;</span>: TypeConstraint(<span class="bu">float</span>),</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;init_skill&quot;</span>: TypeConstraint(<span class="bu">float</span>),</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;def_var&quot;</span>: TypeConstraint(<span class="bu">float</span>),</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;tau&quot;</span>: TypeConstraint(<span class="bu">float</span>),</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;beta&quot;</span>: TypeConstraint(<span class="bu">float</span>),</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;positive_only&quot;</span>: TypeConstraint(<span class="bu">bool</span>),</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;draw_proba_type&quot;</span>: ValueConstraint(<span class="st">&quot;static&quot;</span>, <span class="st">&quot;dynamic&quot;</span>),</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;draw_proba_static&quot;</span>: [</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>        TypeConstraint(<span class="bu">float</span>, <span class="bu">type</span>(<span class="va">None</span>)),</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        FuncConstraint(draw_proba_static_constraint),</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    ],</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;draw_proba_factor&quot;</span>: TypeConstraint(<span class="bu">float</span>),</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-    <p>When the classifier object is initialized, or its parameters are
-        changed via <code>set_params</code>, the classifier runs a check to
-        verify that all parameters satisfy the constraints.</p>
-    <div class="sourceCode" id="cb10"><pre
-            class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> BaseClassifier:</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    ...</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">@final</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _validate_params(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Validate types of given arguments.&quot;&quot;&quot;</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> (</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>            param_name,</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>            param_constraint,</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        ) <span class="kw">in</span> <span class="va">self</span>._parameter_constraints.items():</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="kw">not</span> <span class="bu">hasattr</span>(<span class="va">self</span>, param_name):</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>                <span class="cf">raise</span> <span class="pp">ValueError</span>(</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>                    ...</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>                )</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>            <span class="co"># for a list of constraints,</span></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>            <span class="co"># the parameter needs to satisfy all of them</span></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="bu">isinstance</span>(param_constraint, <span class="bu">list</span>):</span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span> constraint <span class="kw">in</span> param_constraint:</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>                    constraint.satisfies(<span class="va">self</span>, param_name)</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:  <span class="co"># only one constraint</span></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>                param_constraint.satisfies(<span class="va">self</span>, param_name)</span></code></pre></div>
-    <ol start="3" type="1">
-        <li>get/set parameters</li>
-    </ol>
-    <p>To reduce code redundancy, we implement <code>get_params</code> and
-        <code>set_params</code> in <code>BaseClassifier</code>. We use the
-        Python reflection mechanism via <code>hasattr</code>,
-        <code>getattr</code> and <code>setattr</code> to do this, as we need to
-        support the inspection and modification of any classifier object at
-        runtime.</p>
-    <div class="sourceCode" id="cb11"><pre
-            class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> BaseClassifier:</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    ...</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">@final</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> get_params(<span class="va">self</span>, ...) <span class="op">-&gt;</span> Dict[<span class="bu">str</span>, Any]:</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        <span class="co"># the key of _parameter_constraints is all the attributes</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># the classifier wants to expose</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>        param_names <span class="op">=</span> <span class="bu">list</span>(<span class="va">self</span>._parameter_constraints.keys())</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>        param_names.sort()</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>        out <span class="op">=</span> {}</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> key <span class="kw">in</span> param_names:</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>            <span class="co"># if we cannot find the specified attribute</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="kw">not</span> <span class="bu">hasattr</span>(<span class="va">self</span>, key):</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>                <span class="cf">raise</span> <span class="pp">ValueError</span>(</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>                    <span class="ss">f&quot;The specified parameter name </span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">&quot;</span></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>                    <span class="ss">f&quot; is not in the class </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>__class__<span class="sc">.</span><span class="va">__name__</span><span class="sc">!r}</span><span class="ss">.&quot;</span></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>                )</span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>            <span class="co"># store the parameter value</span></span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>            value <span class="op">=</span> <span class="bu">getattr</span>(<span class="va">self</span>, key)</span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>            ...</span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>            out[key] <span class="op">=</span> value</span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> out</span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">@final</span></span>
-<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> set_params(<span class="va">self</span>, <span class="op">**</span>args) <span class="op">-&gt;</span> Self:</span>
-<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>        ...</span>
-<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>        valid_params <span class="op">=</span> <span class="va">self</span>.get_params(deep<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>        ...</span>
-<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> key, value <span class="kw">in</span> args.items():</span>
-<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>            ...</span>
-<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>            <span class="co"># set params</span></span>
-<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>            <span class="bu">setattr</span>(<span class="va">self</span>, <span class="va">self</span>._PARAM_PREFIX <span class="op">+</span> key, value)</span>
-<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>            valid_params[key] <span class="op">=</span> value</span>
-<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>        ...</span>
-<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>        <span class="co"># verify that the new parameters are valid</span></span>
-<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>._validate_params()</span>
-<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span></span></code></pre></div>
-    <ol start="4" type="1">
-        <li>train the classifier</li>
-    </ol>
-    <p>The core part of truelearn.learning is three classifiers
-        (<code>KnowledgeClassifier</code>, <code>NoveltyClassifier</code> and
-        <code>InterestClassifier</code>).</p>
-    <p>The methods used to train them are not identical but follow a similar
-        pattern. Thus, we apply the template pattern when implementing
-        <code>fit</code>. First, these three classifiers have a
-        <code>positive_only</code> mode, during which the classifiers update the
-        learner model iff the learner engages in the given event <code>x</code>.
-        Second, besides the learner model, the classifiers also update some
-        statistics related to the model via
-        <code>self.__update_engagement_stats</code>, which is always invoked
-        regardless of the <code>positive_only</code> mode.</p>
-    <div class="sourceCode" id="cb12"><pre
-            class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fit(<span class="va">self</span>, x: EventModel, y: <span class="bu">bool</span>) <span class="op">-&gt;</span> Self:</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># if positive_only is False or (it&#39;s true and y is true)</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># update the knowledge representation</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="va">self</span>._positive_only <span class="kw">or</span> y:</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        env <span class="op">=</span> <span class="va">self</span>.__create_env()</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.__update_knowledge_representation(env, x, y)</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.__update_engagement_stats(y)</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">self</span></span></code></pre></div>
-    <p>In <code>__update_knowledge_representation</code>, we also apply the
-        strategy pattern as this process can be divided into three parts:</p>
-    <ul>
-        <li>based on the given KCs in the event model, create (in case the
-            corresponding KCs are not in the learner model) or select KCs from the
-            learner model</li>
-        <li>update the selected KCs</li>
-        <li>commit the changes to the learner model</li>
-    </ul>
-    <p>It turns out that part 1 and part 3 are the same across these 3
-        classifiers. They only differ in how they update the selected KCs (the
-        <code>self._generate_ratings</code> method). Thus, we define the
-        following template for
-        <code>__update_knowledge_representation</code>.</p>
-    <div class="sourceCode" id="cb13"><pre
-            class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> __update_knowledge_representation(</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>, env: trueskill.TrueSkill, x: EventModel, y: <span class="bu">bool</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    ) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>        learner_kcs <span class="op">=</span> ...</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>        content_kcs <span class="op">=</span> x.knowledge.knowledge_components()</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># for every topid_id_kc_pair and updated rating</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> topic_kc_pair, rating <span class="kw">in</span> <span class="bu">zip</span>(</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>            learner_topic_kc_pairs,</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>._generate_ratings(env, learner_kcs, content_kcs, x.event_time, y),</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>        ):</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>            topic_id, kc <span class="op">=</span> topic_kc_pair</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>            <span class="co"># first update KC itself</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>            kc.update(</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>                mean<span class="op">=</span>rating.mu, variance<span class="op">=</span>rating.sigma<span class="op">**</span><span class="dv">2</span>, timestamp<span class="op">=</span>x.event_time</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>            )</span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>            <span class="co"># then update the Knowledge by using the updated KC</span></span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>._learner_model.knowledge.update_kc(topic_id, kc)</span></code></pre></div>
-    <p>The method left to each classifier is
-        <code>self._generate_ratings</code> since each classifier relies on
-        different hypotheses presented in the TrueLearn paper and updates the
-        selected KCs differently.</p>
-    <ol start="5" type="1">
-        <li>predict learner’s engagement with learning events</li>
-    </ol>
-    <p>All three classifiers rely on decision threshold to output binary
-        classification. Thus, we can define <code>predict</code> method like
-        this:</p>
-    <div class="sourceCode" id="cb14"><pre
-            class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> predict(<span class="va">self</span>, x: EventModel) <span class="op">-&gt;</span> <span class="bu">bool</span>:</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">self</span>.predict_proba(x) <span class="op">&gt;</span> <span class="va">self</span>._threshold</span></code></pre></div>
-    <p>For <code>predict_proba</code>, since each classifier relies on
-        different assumptions, they have different ways to evaluate the matching
-        quality between the learner and the learning event. It’s worth noting
-        that the return value of <code>self._eval_matching_quality</code> is
-        between 0 and 1.</p>
-    <div class="sourceCode" id="cb15"><pre
-            class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> predict_proba(<span class="va">self</span>, x: EventModel) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    env <span class="op">=</span> <span class="va">self</span>.__create_env()</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    learner_kcs <span class="op">=</span> <span class="va">self</span>.__select_kcs(x)</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    content_kcs <span class="op">=</span> x.knowledge.knowledge_components()</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">self</span>._eval_matching_quality(env, learner_kcs, content_kcs)</span></code></pre></div>
-    <h2 id="loading-datasets">Loading Datasets</h2>
-    <p>truelearn comes with a datasets sub-package to load datasets. These
-        datasets are useful to quickly illustrate the behaviour of the various
-        classifiers implemented in truelearn.</p>
-    <h3 id="dependencies-1">Dependencies</h3>
-    <ul>
-        <li>PEEK Dataset: a large, novel and open-source dataset of learners
-            engaging with educational videos</li>
-    </ul>
-    <h3 id="impl.-overview-2">Impl. Overview</h3>
-    <ol type="1">
-        <li>download PEEK Dataset</li>
-    </ol>
-    <p>Since the size of the PEEK dataset is over 30M, it is not feasible
-        for us to embed it into truelearn. Therefore, we implement a download
-        method to download the PEEK dataset from Github and use the
-        <code>sha256sum</code> method to check the integrity of the downloaded
-        file.</p>
-    <div class="sourceCode" id="cb16"><pre
-            class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _sha256sum(filepath) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    chunk_size <span class="op">=</span> <span class="dv">65536</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    hash_val <span class="op">=</span> hashlib.sha256()</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(filepath, <span class="st">&quot;rb&quot;</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> <span class="va">True</span>:</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>            chunk <span class="op">=</span> <span class="bu">file</span>.read(chunk_size)</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="kw">not</span> chunk:</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>                <span class="cf">break</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>            hash_val.update(chunk)</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> hash_val.hexdigest()</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _download_file(</span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span>, filepath: <span class="bu">str</span>, url: <span class="bu">str</span>, expected_sha256: <span class="bu">str</span>, verbose: <span class="bu">bool</span></span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># param checking here</span></span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    ...</span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># download files</span></span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>    request.urlretrieve(url, filepath)</span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>    actual_sha256 <span class="op">=</span> _sha256sum(filepath)</span>
-<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> expected_sha256 <span class="op">!=</span> actual_sha256:</span>
-<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">IOError</span>(</span>
-<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>            ...</span>
-<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>        )</span></code></pre></div>
-    <p>To avoid unnecessary downloading, we implement a simple cache
-        mechanism based on sha256. We only download the file if the file does
-        not exist or if the hash of the file does not match the expected
-        hash.</p>
-    <div class="sourceCode" id="cb17"><pre
-            class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> check_and_download_file(</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span>, remote_file: RemoteFileMetaData, dirname: Optional[<span class="bu">str</span>] <span class="op">=</span> <span class="va">None</span>, verbose: <span class="bu">bool</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    ...</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    filepath <span class="op">=</span> (</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>        remote_file.filename</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> dirname <span class="kw">is</span> <span class="va">None</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span> path.join(dirname, remote_file.filename)</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># if already downloaded</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>        path.exists(filepath)</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>        <span class="kw">and</span> path.isfile(filepath)</span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>        <span class="kw">and</span> remote_file.expected_sha256 <span class="op">==</span> _sha256sum(filepath)</span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>    ):</span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> filepath</span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>    _download_file(</span>
-<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>        filepath<span class="op">=</span>filepath,</span>
-<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>        url<span class="op">=</span>remote_file.url,</span>
-<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>        expected_sha256<span class="op">=</span>remote_file.expected_sha256,</span>
-<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>        verbose<span class="op">=</span>verbose,</span>
-<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> filepath</span></code></pre></div>
-    <ol start="2" type="1">
-        <li>parse PEEK Dataset mappings</li>
-    </ol>
-    <p>PEEK Dataset contains an <code>id_to_wiki_metadata_mapping.csv</code>
-        file which stores a mapping from Wikipedia id to its title, description,
-        and url. It looks like this:</p>
-    <pre><code>id,url,title,description
-0,&quot;https://en.wikipedia.org/wiki/&quot;&quot;Hello,_World!&quot;&quot;_program&quot;,&quot;&quot;&quot;Hello, World!&quot;&quot; program&quot;,Traditional beginners&#39; computer program
-...</code></pre>
-    <p>Based on the format, we design a <code>__build_mapping</code>
-        method:</p>
-    <div class="sourceCode" id="cb19"><pre
-            class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> __build_mapping(mapping_filepath: <span class="bu">str</span>) <span class="op">-&gt;</span> Dict[<span class="bu">int</span>, Tuple[<span class="bu">str</span>, <span class="bu">str</span>, <span class="bu">str</span>]]:</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(mapping_filepath, encoding<span class="op">=</span><span class="st">&quot;utf-8&quot;</span>) <span class="im">as</span> csv_file:</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>        csv_reader <span class="op">=</span> csv.reader(csv_file, delimiter<span class="op">=</span><span class="st">&quot;,&quot;</span>)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>        <span class="co"># skip the first line</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">next</span>(csv_reader)</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> {</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>            <span class="bu">int</span>(topic_id): (<span class="bu">str</span>(url), <span class="bu">str</span>(title), <span class="bu">str</span>(description))</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> topic_id, url, title, description <span class="kw">in</span> csv_reader</span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>        }</span></code></pre></div>
-    <ol start="3" type="1">
-        <li>parse PEEK Dataset events</li>
-    </ol>
-    <p>PEEK Dataset contains two other files <code>train.csv</code> and
-        <code>test.csv</code>, which have the same format as shown below.</p>
-    <p><img src="images/peek-datasets-column.png"
-            alt="peek-dataset-train-test-columns-meaning" /> cite:
-        https://arxiv.org/pdf/2109.03154.pdf</p>
-    <p>By using this format, we can write two methods
-        <code>__restructure_line</code> and <code>__restructure_data</code>.</p>
-    <p>In <code>__restructure_line</code>, we:</p>
-    <ol type="1">
-        <li>unpack the data we needed</li>
-        <li>convert them to the correct types</li>
-        <li>construct KCs, <code>Knowledge</code> and
-            <code>EventModel</code></li>
-        <li>return the <code>(learner_id, event_model, label)</code> tuple</li>
-    </ol>
-    <div class="sourceCode" id="cb20"><pre
-            class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> __restructure_line(</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    line: List[<span class="bu">str</span>],</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    id_to_url_mapping: Dict[<span class="bu">int</span>, Tuple[<span class="bu">str</span>, <span class="bu">str</span>, <span class="bu">str</span>]],</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    variance: <span class="bu">float</span>,</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    kc_init_func: PEEKKnowledgeComponentGenerator,</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> Tuple[<span class="bu">int</span>, EventModel, <span class="bu">bool</span>]:</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># unpack the data based on the format</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    _, _, _, event_time, learner_id, <span class="op">*</span>topics, label <span class="op">=</span> line</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># convert the data into the correct types</span></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    event_time <span class="op">=</span> <span class="bu">float</span>(event_time)</span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    learner_id <span class="op">=</span> <span class="bu">int</span>(learner_id)</span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    label <span class="op">=</span> <span class="bu">bool</span>(<span class="bu">int</span>(label))</span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># extract topic_id from topics</span></span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    topic_ids <span class="op">=</span> <span class="bu">list</span>(</span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>        <span class="bu">map</span>(</span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>            <span class="kw">lambda</span> topic_id: <span class="bu">int</span>(<span class="bu">float</span>(topic_id[<span class="dv">1</span>])),</span>
-<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>            <span class="bu">filter</span>(<span class="kw">lambda</span> idx: idx[<span class="dv">0</span>] <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>, <span class="bu">enumerate</span>(topics)),</span>
-<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># extract topic_skills from topics</span></span>
-<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>    topic_skills <span class="op">=</span> <span class="bu">list</span>(</span>
-<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>        <span class="bu">map</span>(</span>
-<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>            <span class="kw">lambda</span> topic_skill: <span class="bu">float</span>(topic_skill[<span class="dv">1</span>]),</span>
-<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>            <span class="bu">filter</span>(<span class="kw">lambda</span> idx: idx[<span class="dv">0</span>] <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">1</span>, <span class="bu">enumerate</span>(topics)),</span>
-<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a>    ...</span>
-<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># construct the knowledge based on the topics and mapping</span></span>
-<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a>    knowledge <span class="op">=</span> Knowledge(</span>
-<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a>        {</span>
-<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a>            <span class="co"># construct the KC by using the kc_init_func</span></span>
-<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a>            <span class="co"># given by the user</span></span>
-<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a>            <span class="co"># use strategy pattern here</span></span>
-<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a>            topic_id: kc_init_func(</span>
-<span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a>                ...</span>
-<span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a>            )</span>
-<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> topic_id, skill <span class="kw">in</span> <span class="bu">zip</span>(topic_ids, topic_skills)</span>
-<span id="cb20-42"><a href="#cb20-42" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb20-43"><a href="#cb20-43" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb20-44"><a href="#cb20-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-45"><a href="#cb20-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> learner_id, EventModel(knowledge<span class="op">=</span>knowledge, event_time<span class="op">=</span>event_time), label</span></code></pre></div>
-    <p>In <code>__restructure_data</code>, we</p>
-    <ol type="1">
-        <li>restructure every line by using <code>__restructure_line</code></li>
-        <li>append the returned <code>EventModel</code> and label to a
-            dictionary</li>
-        <li>return the dictionary in list format</li>
-    </ol>
-    <div class="sourceCode" id="cb21"><pre
-            class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> __restructure_data(</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    filepath: <span class="bu">str</span>,</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    id_to_url_mapping: Dict[<span class="bu">int</span>, Tuple[<span class="bu">str</span>, <span class="bu">str</span>, <span class="bu">str</span>]],</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    variance: <span class="bu">float</span>,</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    kc_init_func: PEEKKnowledgeComponentGenerator,</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    limit: Optional[<span class="bu">int</span>],</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> PEEKData:</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    ...</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(filepath, encoding<span class="op">=</span><span class="st">&quot;utf-8&quot;</span>) <span class="im">as</span> csv_file:</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>        reader <span class="op">=</span> csv.reader(csv_file, delimiter<span class="op">=</span><span class="st">&quot;,&quot;</span>)</span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>        learner_id_to_event_and_label <span class="op">=</span> collections.defaultdict(<span class="bu">list</span>)</span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> line <span class="kw">in</span> itertools.islice(reader, limit):</span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>            learner_id, event, label <span class="op">=</span> __restructure_line(</span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>                line, id_to_url_mapping, variance, kc_init_func</span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>            )</span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>            learner_id_to_event_and_label[learner_id].append((event, label))</span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">list</span>(learner_id_to_event_and_label.items())</span></code></pre></div>
-    <h2 id="creating-visualisations">Creating Visualisations</h2>
-    <p>truelearn contains visualisations utilities to visualise the learner
-        model generated by classifiers.</p>
-    <h3 id="dependencies-2">Dependencies</h3>
-    <ul>
-        <li>numpy</li>
-        <li>plotly</li>
-        <li>wordcloud</li>
-    </ul>
-    <h3 id="impl.-overview-3">Impl. Overview</h3>
-    <ol type="1">
-        <li><p>public interface walk-through</p></li>
-        <li><p>standardize data</p></li>
-        <li><p>plot the diagram</p></li>
-    </ol>
-</div>
+            <div>
+                <p>As KC is the atomic unit of knowledge, we design a class&nbsp;<code>Knowledge</code>&nbsp;to group and store KCs by their&nbsp;<code>id</code>.</p>
+            </div>
+            <div class = "col-lg-3"></div>
+            <div class = "col-lg-6 content">
+                <img src="assets/img/implementation/knowledgev1.png" class="img-fluid" alt="">
+            </div>
+            <div class = "col-lg-3"></div>
+
+            <div>
+                <p>The&nbsp;<code>Knowledge</code>&nbsp;class is used to model the learner and event.</p>
+                <p>For the learner, the KC in&nbsp;<code>Knowledge</code>&nbsp;estimates how well the learner knows about this topic. For the event, the KC in&nbsp;<code>knowledge</code>&nbsp;estimates how well the learning event covers the topic.</p>
+
+            </div>
+
+            <div class = "col-lg-3"></div>
+            <div class = "col-lg-6 content">
+                <img src="assets/img/implementation/dataclasses-events.png" class="img-fluid" alt="">
+            </div>
+            <div class = "col-lg-3"></div>
+
+            <div>
+                <h3>Extendable Knowledge Components</h3>
+                <p>To ensure developers can freely extend the KC class based on their application, we avoid referring to&nbsp;<code>KnowledgeComponent</code>&nbsp;directly in&nbsp;<code>Knowledge</code>. Instead, we define an interface&nbsp;<code>BaseKnowledgeComponent</code>&nbsp;that specifies the public APIs for all KCs.</p>
+            </div>
+            <div class = "col-lg-3"></div>
+            <div class = "col-lg-6 content">
+                <img src="assets/img/implementation/baseKC.png" class="img-fluid" alt="">
+            </div>
+            <div class = "col-lg-3"></div>
+
+            <div>
+                <p>With the interface above, the implementation of&nbsp;<code>Knowledge</code>&nbsp;does not need to refer to any concrete implementation.</p>            </div>
+            <div class = "col-lg-3"></div>
+            <div class = "col-lg-6 content">
+                <img src="assets/img/implementation/knowledge-final.png" class="img-fluid" alt="">
+            </div>
+            <div class = "col-lg-3"></div>
+
+            <div>
+                <h3>Updating and Transferring Knowledge</h3>
+                <p>As a family of Bayesian algorithms, Truelearn classifiers, which utilise the&nbsp;<code>truelearn.models</code>, need to update the prior estimation of the existing KCs and create new KCs in the learner model based on the given learning event.</p>
+                <p>Thus, we specify two additional APIs in&nbsp;<code>BaseKnowledgeComponent</code>&nbsp;that all KCs need to implement.</p>
+            </div>
+            <div class = "col-lg-3"></div>
+            <div class = "col-lg-6 content">
+                <img src="assets/img/implementation/basekc-update-clone.png" class="img-fluid" alt="">
+            </div>
+            <div class = "col-lg-3"></div>
+
+        </div>
+
+        <div class="section-header">
+            <h2 id="classifier-implementation">Classifiers</h2>
+            <p>The&nbsp;<code>truelearn.learning</code>&nbsp;sub-package implements all the classifiers in the truelearn library.</p>        </div>
+        <div>
+            <h3>Dependencies</h3>
+            <ul>
+                <li>
+                    <p>trueskill: a rating system among game players. It was developed by Microsoft Research and has been used on Xbox LIVE for ranking and matchmaking services. This system quantifies players&rsquo; TRUE skill points by the Bayesian inference algorithm.</p>
+                </li>
+                <li>
+                    <p>mpmath: a free (BSD licensed) Python library for real and complex floating-point arithmetic with arbitrary precision.</p>
+                </li>
+            </ul>
+        </div>
+
+        <div class="row">
+
+            <div>
+                <h3>Public Interface Walkthrough</h3>
+                <p>Based on what we outlined in our study, we designed a&nbsp;<code>BaseClassifier</code>&nbsp;class to ensure a consistent interface across all our classifiers.</p>
+                <p>The class&nbsp;<code>BaseClassifier</code>&nbsp;follows the naming convention of the scikit-learn library:</p>
+                <ul>
+                    <li>The&nbsp;<code>fit</code>&nbsp;method is used to train the classifier</li>
+                    <li>The&nbsp;<code>predict</code>&nbsp;and&nbsp;<code>predict_proba</code>&nbsp;methods use the classifier to make predictions.</li>
+                    <li>The&nbsp;<code>get_params</code>&nbsp;and&nbsp;<code>set_params</code>&nbsp;methods are used to get or set the parameters of the classifier.</li>
+                </ul>
+            </div>
+
+            <div class = "col-lg-3"></div>
+            <div class = "col-lg-6 content">
+                <img src="assets/img/implementation/base-classifier.png" class="img-fluid" alt="">
+            </div>
+            <div class = "col-lg-3"></div>
+
+            <div>
+                <h3>Defining Parameter Constraints</h3>
+                <p>When the developer initializes the classifier, they need to pass in the parameters for the classifier. Then, the classifier implementor usually needs to implement checks inside classifiers to verify that the given parameters have the correct type and value. To simplify this process and provide a simple yet powerful way to validate parameters, we used parameter constraints.</p>
+                <p>There are three kinds of ways to express different constraints on parameters.&nbsp;<code>TypeConstraint</code>&nbsp;ensures the type of the parameters must match one of the types in the&nbsp;<code>TypeConstraint</code>&nbsp;class.&nbsp;<code>ValueConstraint</code>&nbsp;checks if the value of the parameters matches one of the values in the&nbsp;<code>ValueConstraint</code>&nbsp;class.&nbsp;<code>FuncConstraint</code>&nbsp;ensures that the parameters satisfy some user-defined functions.</p>
+            </div>
+
+            <div class = "col-lg-3"></div>
+            <div class = "col-lg-6 content">
+                <img src="assets/img/implementation/constraints.png" class="img-fluid" alt="">
+            </div>
+            <div class = "col-lg-3"></div>
+
+            <div>
+                <p>Then, in all classifiers, we define a class attribute&nbsp;<code>_parameter_constraints</code>, which maps parameter names to a constraint or a list of constraints.</p>
+            </div>
+
+            <div class = "col-lg-3"></div>
+            <div class = "col-lg-6 content">
+                <img src="assets/img/implementation/param-constraints.png" class="img-fluid" alt="">
+            </div>
+            <div class = "col-lg-3"></div>
+
+            <div>
+                <p>When the classifier object is initialized, or its parameters are changed via&nbsp;<code>set_params</code>, the classifier runs a check to verify that all parameters satisfy the constraints.</p>
+            </div>
+
+            <div class = "col-lg-3"></div>
+            <div class = "col-lg-6 content">
+                <img src="assets/img/implementation/validate-params.png" class="img-fluid" alt="">
+            </div>
+            <div class = "col-lg-3"></div>
+
+            <div>
+                <h3>Getting and Setting Parameters</h3>
+                <p>To reduce code redundancy, we implement&nbsp;<code>get_params</code>&nbsp;and&nbsp;<code>set_params</code>&nbsp;in&nbsp;<code>BaseClassifier</code>. We use the Python reflection mechanism via&nbsp;<code>hasattr</code>,&nbsp;<code>getattr</code>&nbsp;and&nbsp;<code>setattr</code>&nbsp;to do this, as we need to support the inspection and modification of any classifier object at runtime.</p>
+            </div>
+
+            <div class = "col-lg-3"></div>
+            <div class = "col-lg-6 content">
+                <img src="assets/img/implementation/get-set-params.png" class="img-fluid" alt="">
+            </div>
+            <div class = "col-lg-3"></div>
+
+            <div>
+                <h3>Training the Classifier</h3>
+                <p>The core part of truelearn.learning is three classifiers (<code>KnowledgeClassifier</code>,&nbsp;<code>NoveltyClassifier</code>&nbsp;and&nbsp;<code>InterestClassifier</code>).</p>
+                <p>The methods used to train them are not identical but follow a similar pattern. Thus, we apply the template pattern when implementing&nbsp;<code>fit</code>. First, these three classifiers have a&nbsp;<code>positive_only</code>&nbsp;mode, during which the classifiers update the learner model iff the learner engages in the given event&nbsp;<code>x</code>. Second, besides the learner model, the classifiers also update some statistics related to the model via&nbsp;<code>self.__update_engagement_stats</code>, which is always invoked regardless of the&nbsp;<code>positive_only</code>&nbsp;mode.</p>
+            </div>
+
+            <div class = "col-lg-3"></div>
+            <div class = "col-lg-6 content">
+                <img src="assets/img/implementation/fit.png" class="img-fluid" alt="">
+            </div>
+            <div class = "col-lg-3"></div>
+
+            <div>
+                <p>In&nbsp;<code>__update_knowledge_representation</code>, we also apply the strategy pattern as this process can be divided into three parts:</p>
+                <ul>
+                    <li>based on the given KCs in the event model, create (in case the corresponding KCs are not in the learner model) or select KCs from the learner model</li>
+                    <li>update the selected KCs</li>
+                    <li>commit the changes to the learner model</li>
+                </ul>
+                <p>It turns out that part 1 and part 3 are the same across these 3 classifiers. They only differ in how they update the selected KCs (the&nbsp;<code>self._generate_ratings</code>&nbsp;method). Thus, we define the following template for&nbsp;<code>__update_knowledge_representation</code>.</p>
+            </div>
+
+            <div class = "col-lg-3"></div>
+            <div class = "col-lg-6 content">
+                <img src="assets/img/implementation/update-knowledge.png" class="img-fluid" alt="">
+            </div>
+            <div class = "col-lg-3"></div>
+
+            <div>
+                <p>The method left to each classifier is&nbsp;<code>self._generate_ratings</code>&nbsp;since each classifier relies on different hypotheses presented in the TrueLearn paper and updates the selected KCs differently.</p>
+            </div>
+
+            <div>
+                <h3>Predicting Learner Engagement</h3>
+                <p>All three classifiers rely on decision threshold to output binary classification. Thus, we can define&nbsp;<code>predict</code>&nbsp;method like this:</p>
+            </div>
+
+            <div class = "col-lg-3"></div>
+            <div class = "col-lg-6 content">
+                <img src="assets/img/implementation/predict.png" class="img-fluid" alt="">
+            </div>
+            <div class = "col-lg-3"></div>
+
+            <div>
+                <p>For&nbsp;<code>predict_proba</code>, since each classifier relies on different assumptions, they have different ways to evaluate the matching quality between the learner and the learning event. It's worth noting that the return value of&nbsp;<code>self._eval_matching_quality</code>&nbsp;is between 0 and 1.</p>
+            </div>
+
+            <div class = "col-lg-3"></div>
+            <div class = "col-lg-6 content">
+                <img src="assets/img/implementation/predict-proba.png" class="img-fluid" alt="">
+            </div>
+            <div class = "col-lg-3"></div>
+
+        </div>
+
+        <div class="section-header">
+            <h2 id="datasets">Loading Datasets</h2>
+            <p>Truelearn comes with a datasets sub-package to load datasets. These datasets are useful to quickly illustrate the behaviour of the various classifiers implemented in truelearn.</p>
+        </div>
+
+        <div>
+            <h3>Dependencies</h3>
+            <ul>
+                <li>PEEK Dataset: a large, novel and open-source dataset of learners engaging with educational videos</li>
+            </ul>
+        </div>
+
+        <div class = "row">
+
+            <div>
+                <h3>Downloading the PEEK dataset</h3>
+                <p>Since the size of the PEEK dataset is over 3MB, it is not feasible for us to embed it into truelearn as it would unnecessarily bloat our library. Therefore, we implement a download method to download the PEEK dataset from Github and use the <code>sha256sum</code>&nbsp;method to check the integrity of the downloaded file.</p>
+            </div>
+
+            <div class = "col-lg-3"></div>
+            <div class = "col-lg-6 content">
+                <img src="assets/img/implementation/download-peek.png" class="img-fluid" alt="">
+            </div>
+            <div class = "col-lg-3"></div>
+
+            <div>
+                <p>To avoid unnecessary downloading, we implement a simple cache mechanism based on sha256. We only download the file if the file does not exist or if the hash of the file does not match the expected hash.</p>
+            </div>
+
+            <div class = "col-lg-3"></div>
+            <div class = "col-lg-6 content">
+                <img src="assets/img/implementation/caching.png" class="img-fluid" alt="">
+            </div>
+            <div class = "col-lg-3"></div>
+
+            <div>
+                <h3>Parsing the PEEK dataset mapping</h3>
+                <p>The PEEK Dataset contains an <code>id_to_wiki_metadata_mapping.csv</code>&nbsp;file which stores a mapping from Wikipedia id to its title, description, and url. It looks like this:</p>
+                <pre><code>id,url,title,description
+                    0,"https://en.wikipedia.org/wiki/""Hello,_World!""_program","""Hello, World!"" program",Traditional beginners' computer program...</code></pre>
+                <p>Based on this format, we designed a __build_mapping method:</p>
+            </div>
+
+            <div class = "col-lg-3"></div>
+            <div class = "col-lg-6 content">
+                <img src="assets/img/implementation/build-mapping.png" class="img-fluid" alt="">
+            </div>
+            <div class = "col-lg-3"></div>
+
+            <div>
+                <h3>Parsing the PEEK dataset events</h3>
+                <p>PEEK Dataset contains two other files&nbsp;<code>train.csv</code>&nbsp;and&nbsp;<code>test.csv</code>, which have the same format as shown below.</p>
+            </div>
+
+            <div class = "col-lg-3"></div>
+            <div class = "col-lg-6 content">
+                <br>
+                <img src="assets/img/implementation/peek-datasets-column.png" class="img-fluid" alt="">
+                <p style="text-align: center"><strong>[1]</strong></p>
+            </div>
+            <div class = "col-lg-3"></div>
+
+            <div>
+                <p>[1] S. Bulathwela, M. Perez-Ortiz, E. Novak, E. Yilmaz, and J. Shawe-Taylor, “PEEK: A Large Dataset of Learner Engagement with Educational Videos,” arXiv.org, 2021. https://arxiv.org/abs/2109.03154 (accessed Apr. 09, 2023).
+                    ‌</p>
+            </div>
+
+            <div>
+                <p>By using this format, we can write two methods&nbsp;<code>__restructure_line</code>&nbsp;and&nbsp;<code>__restructure_data</code>.</p>
+                <p>In&nbsp;<code>__restructure_line</code>, we:</p>
+                <ol>
+                    <li>Unpack the data</li>
+                    <li>Convert them to the correct types</li>
+                    <li>Construct KCs,&nbsp;<code>Knowledge</code>&nbsp;and&nbsp;<code>EventModel</code></li>
+                    <li>Return the&nbsp;<code>(learner_id, event_model, label)</code>&nbsp;tuple</li>
+                </ol>
+            </div>
+
+            <div class = "col-lg-3"></div>
+            <div class = "col-lg-6 content">
+                <img src="assets/img/implementation/restructure-line.png" class="img-fluid" alt="">
+            </div>
+            <div class = "col-lg-3"></div>
+
+            <div>
+                <p>In&nbsp;<code>__restructure_data</code>, we</p>
+                <ol>
+                    <li>Restructure each line by using&nbsp;<code>__restructure_line</code></li>
+                    <li>Append the returned&nbsp;<code>EventModel</code>&nbsp;and label to a dictionary</li>
+                    <li>Return the dictionary in list format</li>
+                </ol>
+            </div>
+
+            <div class = "col-lg-3"></div>
+            <div class = "col-lg-6 content">
+                <img src="assets/img/implementation/restructure-data.png" class="img-fluid" alt="">
+            </div>
+
+        </div>
+    </div>
+    </section>
 </main>
 <!-- ======= Footer ======= -->
 <footer id="footer">
