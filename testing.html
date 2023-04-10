@@ -9,8 +9,8 @@
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="assets/img/TL-favicon.png" rel="icon">
-    <link href="assets/img/TL-logo.png" rel="apple-touch-icon">
+    <link href="assets/img/logos/TL-favicon.png" rel="icon">
+    <link href="assets/img/logos/TL-logo.png" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800|Montserrat:300,400,700" rel="stylesheet">
@@ -87,6 +87,203 @@
     </div>
 </section>
 
+<main>
+    <section id="testing">
+    <div class="container" data-aos="fade-up">
+        <div class = "section-header">
+            <h2 id="strategy">Testing Strategy</h2>
+            <p>Since truelearn is a Python library targeting developers, researchers and learners, we must conduct comprehensive tests to ensure that its functionality, usability and stability meet the desired standards outlined in our MoSCoW list.</p>        </div>
+        <div class="row">
+            <div>
+                <h3>Test Methodology</h3>
+                <p>Besides the&nbsp;<code>truelearn.utils.visualisations</code>&nbsp;sub-package, the library should be tested by unit and integration tests. We will use PyTest with&nbsp;<code>pytest-socket</code>&nbsp;(control access to the Internet),&nbsp;<code>pytest-cov</code>&nbsp;(generate coverage report) and&nbsp;<code>doctest</code>&nbsp;(documentation tests). We will run these tests on three operating systems (OSX, Linux, Windows) and five Python versions (3.7-3.11) to ensure the compatibility of our library.</p>
+                <p>For visualisations, we will conduct user acceptance tests by consulting our users, who are developers  and learners, setting up different test cases for them and asking them to provide feedback.</p>
+            </div>
+
+            <div>
+                <h3>Continuous integration</h3>
+                <p>We have also deployed several continuous integrations (CI) tools in GitHub to automate the testing process. These tools include:</p>
+                <ul>
+                    <li><code>PyTest</code>: run all the unit and integration tests</li>
+                    <li><code>prospector</code>: check for security and style issues and violations of linting rules</li>
+                    <li><code>black</code>: check for code formatting issues</li>
+                    <li><code>typos</code>: check for typos</li>
+                    <li><code>coverage</code>: check for test coverage, which is used to guide us to improve tests</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <h2>Unit and integration testing</h2>
+            <p>Unit tests are the first type of test added to the truelearn library. In truelearn, there are two forms of unit tests.</p>
+            <p>The first form is based on doctest. For most of the classes in&nbsp;<code>truelearn.models</code>&nbsp;and&nbsp;<code>truelearn.learning</code>, we have added examples of how to use itself in its docstring and provided some expected output. When the doctest test framework runs the doctest, it will run these examples and compare the actual output with the expected one.</p>
+        </div>
+
+        <div class="row">
+
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+                <img src="assets/img/testing/doctests.png" class="img-fluid" alt="">
+            </div>
+            <div class="col-lg-3"></div>
+
+            <div>
+                <p>The second form is the traditional unit test where we test all the subpackages and modules in our library.</p>               <p>Simultaneously, instead of purely relying on unit testing, we apply integration testing on testing classifiers (e.g.&nbsp;<code>KnowledgeClassifier</code>,&nbsp;<code>NoveltyClassifier</code>,&nbsp;<code>InterestClassifier</code>&nbsp;and&nbsp;<code>INKClassifier</code>) and visualisations.</p>
+                <p>For classifiers, some of their methods, like&nbsp;<code>fit</code>&nbsp;and&nbsp;<code>predict</code>, read or update with learner and event models, which complicates testing. In order to successfully test them, we have carefully crafted some test cases based on the mathematical principles behind them.</p>
+            </div>
+
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+                <img src="assets/img/testing/knowledge-classifier.png" class="img-fluid" alt="">
+            </div>
+            <div class="col-lg-3"></div>
+
+            <div>
+                <p>Since we have the original algorithm logic for the classifier, we also generated some random inputs and compared the output of the existing algorithm with that of the original one.</p>
+            </div>
+
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+                <img src="assets/img/testing/novelty-classifier.png" class="img-fluid" alt="">
+            </div>
+            <div class="col-lg-3"></div>
+
+            <div>
+                <p>For visualisation, we are primarily concerned with the charts generated. So, we selected some sample&nbsp;<code>Knowledge</code>&nbsp;and used the visualisation sub-package to generate some baseline files, which are placed in&nbsp;<code>truelearn/tests/baseline_files</code>. The integration tests for our visualisations sub-package are mostly to test whether we can produce images that are identical or similar to the baseline files across platforms and versions.</p>
+                <p>For matplotlib-based plotters, we focus on generating similar png files. For plotly-based plotter class, we focus on generating html and json files. The reasons for such choice are</p>
+                <ul>
+                    <li>matplotlib: matplotlib itself has tests to ensure that images in different format can be correctly rendered and exported. So, we only need to ensure that one of the images types work correctly. At the same time, testing different file extensions requires the installation of special external dependencies (GhostScript and Inkspace). These make the testing process pointlessly complex and make it difficult for developers to run our tests in a simple manner. Thus, we only choose to test png file.</li>
+                    <li>plotly: plotly supports the export of figures to static (png, jpg, pdf...) and interactive (html, json - which can be used by plotly.js on the front-end) formats. The reason we only test to html and json output is because of the limitations of its backend. The backend it uses is&nbsp;<code>Kaleido</code>, which uses Chromium internally to export the images. Based on our testing, we found that due to chromium's font rendering policy, there was no way to generate the same/similar images on different operating systems, even if we used the same font, which made it impossible to replicate our testing for images. So we decided to use only reproducible (with a little setup) html and json formats for our tests.</li>
+                </ul>
+                <p>By using these tests, TrueLearn achieves 100% test coverage.</p>
+            </div>
+
+        </div>
+
+        <div class="section-header">
+            <h2>Evaluating Default Values</h2>
+        </div>
+
+        <div class="row">
+            <div>
+                <p>As stated in our research, we wanted to choose default values for our classifier so that it performs reasonably. To quantitatively assess what are reasonable results, we used the classifier performance as a metric and conducted several tests based on the PEEK dataset.</p>
+                <p>Since we wanted to investigate how sensible the results generated by the default values are, we ignored the&nbsp;<code>train.csv</code>&nbsp;file in the dataset, which is used for hyperparameter training. We only utilized the learning events in the&nbsp;<code>test.csv</code>&nbsp;file and conducted experiments on all learners and the 20 most active learners in the training set.</p>
+                <p>The following three tables show the weighted average test performance for accuracy, precision, recall and F1. The first two tables are the results we collected in our experiments using the default values we eventually chose. The third table shows the results of the classifier after hyperparameter training, presented in &ldquo;TrueLearn: A Bayesian Algorithm Series for Matching Lifelong Learners with Open Educational Resources" by Bulathwela, et al.</p>
+            </div>
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+                <img src="assets/img/testing/performance-all-learners.png" class="img-fluid" alt="">
+                <p style="text-align: center">The performance of classifiers on all learners</p>
+            </div>
+            <div class="col-lg-3"></div>
+
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+                <img src="assets/img/testing/performance-20-learners.png" class="img-fluid" alt="">
+                <p style="text-align: center">The performance of classifiers on the 20 most active learners</p>
+            </div>
+            <div class="col-lg-3"></div>
+
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+                <img src="assets/img/testing/performance-in-paper.png" class="img-fluid" alt="">
+
+                <p style="text-align: center">The performance of classifiers, presented in the TrueLearn paper</p>
+            </div>
+            <div class="col-lg-3"></div>
+
+            <div>
+                <p>As can be seen from these experiments, the default values we chose for the classifiers are sensible: for the&nbsp;<code>KnowledgeClassifier</code>&nbsp;and the&nbsp;<code>NoveltyClassifier</code>, they perform close to or even better than the hyperparameter-trained classifiers (TrueLearn fixed-depth and TrueLearn Novelty) in terms of recall and f1 score. Also, we can see that the&nbsp;<code>INKClassifier</code>, which utilizes&nbsp;<code>NoveltyClassifier</code>&nbsp;and&nbsp;<code>InterestClassifier</code>&nbsp;internally, is ahead of most of the classifiers in terms of accuracy and precision.</p>
+                <p>Therefore, it is reasonable to conclude that by default, the classifier performs sensibly, which makes our library user-friendly.</p>
+            </div>
+
+        </div>
+
+        <div class="section-header">
+            <h2>Performance Tests</h2>
+            <p>As stated in our MoSCoW list, we want the performance of our library to be comparable to that of the original code. Thus, we conducted performance tests by benchmarking our library against the original code&nbsp;<a href="https://github.com/sahanbull/TrueLearn">https://github.com/sahanbull/TrueLearn</a>.</p>
+        </div>
+
+        <div class="row">
+            <div>
+                <h2>Experiment Setup</h2>
+            </div>
+            <div>
+                <p><strong>Outline</strong>: We chose the&nbsp;<code>KnowledgeClassifier</code>&nbsp;and&nbsp;<code>NoveltyClassifier</code>&nbsp;(with their default parameters) for benchmarking, as each represents different assumptions in TrueLearn (so, different fitting and prediction methods), and they are publicly available in the original code. The functions we chose to benchmark are&nbsp;<code>fit</code>&nbsp;and&nbsp;<code>predict</code>, as they are the core of each classifier and are responsible for training and providing predictions.</p>
+            </div>
+            <div>
+                <p><strong>Input</strong>: We used the PEEK dataset with the 20, 40 and 80 most active learners as input to our program. Below is an example of the input array.</p>
+            </div>
+            <div>
+                <pre class="language-python" style='font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace; font-size: 16px; margin-top: 0px; margin-bottom: 16px; overflow-wrap: normal; padding: 16px; overflow: auto; line-height: 1.5; background-color: rgb(246, 248, 250); border-radius: 6px; color: rgb(0, 0, 0); text-shadow: rgb(255, 255, 255) 0px 1px; text-align: left; white-space: pre; word-spacing: 0px; word-break: normal; tab-size: 4; hyphens: none; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;' tabindex="0"><code class="language-python" style='font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace; font-size: 16px; padding: 0px; margin: 0px; white-space: pre; background: 0px 0px transparent; border-radius: 6px; color: rgb(0, 0, 0); text-shadow: rgb(255, 255, 255) 0px 1px; text-align: left; word-spacing: normal; word-break: normal; overflow-wrap: normal; line-height: inherit; tab-size: 4; hyphens: none; border: 0px; display: inline; overflow: visible;'><span class="token punctuation" style="color: rgb(153, 153, 153);">[</span>
+                    <span class="token punctuation" style="color: rgb(153, 153, 153);">(</span>learner_id<span class="token punctuation" style="color: rgb(153, 153, 153);">,</span> <span class="token punctuation" style="color: rgb(153, 153, 153);">[</span><span class="token punctuation" style="color: rgb(153, 153, 153);">(</span>event1<span class="token punctuation" style="color: rgb(153, 153, 153);">,</span> label1<span class="token punctuation" style="color: rgb(153, 153, 153);">)</span><span class="token punctuation" style="color: rgb(153, 153, 153);">,</span> <span class="token punctuation" style="color: rgb(153, 153, 153);">(</span>event2<span class="token punctuation" style="color: rgb(153, 153, 153);">,</span> label2<span class="token punctuation" style="color: rgb(153, 153, 153);">)</span><span class="token punctuation" style="color: rgb(153, 153, 153);">,</span> <span class="token punctuation" style="color: rgb(153, 153, 153);">.</span><span class="token punctuation" style="color: rgb(153, 153, 153);">.</span><span class="token punctuation" style="color: rgb(153, 153, 153);">.</span><span class="token punctuation" style="color: rgb(153, 153, 153);">]</span><span class="token punctuation" style="color: rgb(153, 153, 153);">)</span><span class="token punctuation" style="color: rgb(153, 153, 153);">,</span>  <span class="token comment" style="color: rgb(112, 128, 144);"># first learner</span>
+                    <span class="token punctuation" style="color: rgb(153, 153, 153);">.</span><span class="token punctuation" style="color: rgb(153, 153, 153);">.</span><span class="token punctuation" style="color: rgb(153, 153, 153);">.</span> <span class="token comment" style="color: rgb(112, 128, 144);"># second, third, ... learner</span>
+                <br><span class="token punctuation" style="color: rgb(153, 153, 153);">]</span></code></pre>
+            </div>
+            <div>
+                <p>We focused on comparing the wall clock time and peak memory size under these different input sizes:</p>
+                <ul>
+                    <li>The wall clock time takes into account the effects of external factors such as IO, context switching, etc. It gives us a more accurate picture of performance compared to CPU time.</li>
+                    <li>Peak memory size measures the maximum amount of memory used by a program during execution. Total memory allocated tells us the total amount of memory allocated during execution. We are more concerned about peak memory size in this experiment because this tells us how much memory the user will actually use when running the library/original code.</li>
+                </ul>
+                <p><strong>Method</strong>: We iterated over the input of all learners. For each learner, we iterated over its learning events. For each learning event, we first call the&nbsp;<code>predict</code>&nbsp;method of the classifier and store the returned result in an array. Then, we call the&nbsp;<code>fit</code>&nbsp;method of the classifier with&nbsp;<code>event</code>&nbsp;and&nbsp;<code>label</code>&nbsp;as parameters. Below is a high-level overview of the structure of our benchmark.</p>
+            </div>
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+                <img src="assets/img/testing/benchmark.png" class="img-fluid" alt="">
+                <p style="text-align: center"><strong>High-level overview of the structure of our benchmark</strong></p>
+            </div>
+            <div class="col-lg-3"></div>
+
+            <div>
+                <p><strong>Tools</strong>: For time-based benchmarking, we use&nbsp;<code>hyperfine</code>, a state-of-the-art command line benchmarking tool that allows us to benchmark the wall clock time of our program without making any modifications. For memory profiling, we use&nbsp;<code>memray</code>, a memory profiler for Python that can &ldquo;keep track of allocations in Python code, in native extension modules, and in the Python interpreter itself.&rdquo;&nbsp;<a href="https://github.com/bloomberg/memray">https://github.com/bloomberg/memray</a>.</p>
+                <p>We ran the benchmarks described above with a single thread on a MacBook M1 and Python 3.7 (x86-64) and tweaked the original code slightly.</p>
+            </div>
+
+            <div>
+                <h2>Results</h2>
+            </div>
+            <div>
+                <p>For timing, we get the following results:</p>
+            </div>
+            <div>
+                <p>From the table, we can see that:</p>
+                <ul>
+                    <li><code>KnowledgeClassifier</code>: On average, the original code is 1.04 times faster than the library implementation. This is reasonable and acceptable as we track additional fields in the knowledge component, learner model and event model.</li>
+                    <li><code>NoveltyClassifier</code>: On average, the library implementation is 1.17 times faster than the original code. This is because we have optimised an operation that calculates the average value of an array.</li>
+                    <li>In summary, our knowledge classifier has comparable performance to the original code, and our novelty classifier is even 20% faster than the original code due to our optimisation.</li>
+                </ul>
+            </div>
+            <div>
+                <p>For memory consumption, we get the following results:</p>
+            </div>
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+                <img src="assets/img/testing/peak-memory-size.svg" class="img-fluid" alt="">
+            </div>
+            <div class="col-lg-3"></div>
+
+            <div>
+                <ul>
+                    <li>
+                        <p><code>KnowledgeClassifier</code>: For different sizes of inputs, the raw code always consumes slightly more memory than the library implementation. As the size of the input increases, the difference between the memory consumed by the original code and the memory consumed by the library becomes larger and larger.</p>
+                    </li>
+                    <li>
+                        <p><code>NoveltyClassifier</code>: When the input size is 20, the peak memory consumption of the original code and the library implementation is very similar. But, like&nbsp;<code>KnowledgeClassifier</code>, as the input size increases, the difference between the memory consumed by the original code and the memory consumed by the library becomes larger and larger.</p>
+                    </li>
+                </ul>
+                <p>Based on the comparison of peak memory size, we can see that the peak memory consumption of the library does not exceed that of the original code.</p>
+                <p>In summary, based on our benchmarking results, it is reasonable to conclude that our library is comparable to or better than the original code presented in the TrueLearn paper.</p>
+            </div>
+        </div>
+
+
+    </div>
+    </section>
+</main>
+
+
+
 <!-- ======= Footer ======= -->
 <footer id="footer">
     <div class="container">
@@ -115,7 +312,6 @@
 <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
 <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
 <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-<script src="assets/vendor/php-email-form/validate.js"></script>
 
 <!-- Template Main JS File -->
 <script src="assets/js/main.js"></script>

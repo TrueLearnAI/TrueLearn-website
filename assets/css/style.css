@@ -611,6 +611,17 @@ section {
   font-family: "Montserrat", sans-serif;
 }
 
+#testing .content img {
+  margin-top: -20px;
+}
+
+#testing .content h3 {
+  color: #000000;
+  font-weight: 450;
+  font-size: 30px;
+  font-family: "Montserrat", sans-serif;
+}
+
 /* About Section
 --------------------------------*/
 #about {
@@ -960,12 +971,12 @@ section {
 #call-to-action {
   background: #081e5b;
   background-size: cover;
-  padding: 40px 0;
+  padding: 0;
 }
 
 #call-to-action .cta-title {
   color: #fff;
-  font-size: 28px;
+  font-size: 36px;
   font-weight: 700;
 }
 
@@ -1092,3 +1103,9 @@ section {
 #footer .credits a {
   color: #090088;
 }
+
+
+#timeline div
+  {
+  padding: 0;
+  }
