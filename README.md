@@ -1,4 +1,4 @@
-[![TrueLearn](assets/img/logos/TrueLearn-Logo.png)](https://truelearnai.github.io)
+[![TrueLearn](assets/img/logos/TrueLearn-logo.png)](https://truelearnai.github.io)
 
 This repository contains the code for the TrueLearn website. This is not
 the documentation for the TrueLearn library.
