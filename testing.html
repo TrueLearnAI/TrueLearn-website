@@ -206,7 +206,7 @@
 
         <div class="row">
             <div>
-                <h2>Experiment Setup</h2>
+                <h3>Experiment Setup</h3>
             </div>
             <div>
                 <p><strong>Outline</strong>: We chose the&nbsp;<code>KnowledgeClassifier</code>&nbsp;and&nbsp;<code>NoveltyClassifier</code>&nbsp;(with their default parameters) for benchmarking, as each represents different assumptions in TrueLearn (so, different fitting and prediction methods), and they are publicly available in the original code. The functions we chose to benchmark are&nbsp;<code>fit</code>&nbsp;and&nbsp;<code>predict</code>, as they are the core of each classifier and are responsible for training and providing predictions.</p>
@@ -241,10 +241,13 @@
             </div>
 
             <div>
-                <h2>Results</h2>
+                <h3>Results</h3>
             </div>
             <div>
                 <p>For timing, we get the following results:</p>
+            </div>
+            <div class="col-lg-12">
+                <img src="assets/img/testing/timing.PNG" class="img-fluid" alt="">
             </div>
             <div>
                 <p>From the table, we can see that:</p>
@@ -275,6 +278,69 @@
                 <p>Based on the comparison of peak memory size, we can see that the peak memory consumption of the library does not exceed that of the original code.</p>
                 <p>In summary, based on our benchmarking results, it is reasonable to conclude that our library is comparable to or better than the original code presented in the TrueLearn paper.</p>
             </div>
+        </div>
+
+        <div class="section-header">
+            <h2>User Acceptance Testing</h2>
+            <p>To ensure our library performs its desired functionalities to the satisfaction of users, we gathered four users to use our library and complete three different surveys, for each test case. These results were then recorded and are displayed on a table which you can find below. </p>
+        </div>
+
+        <div class="row">
+            <div>
+                <h3>Testers</h3>
+                <p><strong><span data-contrast="auto">Denis L.</span></strong><span data-ccp-props="{&quot;134233117&quot;:false,&quot;134233118&quot;:false,&quot;201341983&quot;:0,&quot;335551550&quot;:1,&quot;335551620&quot;:1,&quot;335559685&quot;:0,&quot;335559737&quot;:0,&quot;335559738&quot;:0,&quot;335559739&quot;:0,&quot;335559740&quot;:259}">&nbsp;</span></p>
+                <ul>
+                    <li><span data-contrast="auto">Denis is a student studying Computer Science at the University College London.&nbsp;</span><span data-ccp-props="{}">&nbsp;</span></li>
+                    <li><span data-contrast="auto">He has a strong desire for learning and is curious about what is around him.</span><span data-ccp-props="{}">&nbsp;</span></li>
+                    <li><span data-contrast="auto">He often makes use of different Open Courseware websites to complement his learning and to discover new courses that spark her interest.</span><span data-ccp-props="{}">&nbsp;</span></li>
+                </ul>
+                <p><strong><span data-contrast="auto">Steven M.</span></strong><span data-ccp-props="{&quot;134233117&quot;:false,&quot;134233118&quot;:false,&quot;201341983&quot;:0,&quot;335551550&quot;:1,&quot;335551620&quot;:1,&quot;335559685&quot;:0,&quot;335559737&quot;:0,&quot;335559738&quot;:0,&quot;335559739&quot;:0,&quot;335559740&quot;:259}">&nbsp;</span></p>
+                <ul>
+                    <li><span data-contrast="auto">Steven is a student studying Finance at the University of Oxford.</span><span data-ccp-props="{}">&nbsp;</span></li>
+                    <li><span data-contrast="auto">He is looking to gain insights into what he learns and identify his weaknesses which is important to him in refining his knowledge.</span><span data-ccp-props="{}">&nbsp;</span></li>
+                </ul>
+                <p><strong><span data-contrast="auto">Jack G.</span><span data-ccp-props="{}">&nbsp;</span></strong></p>
+                <ul>
+                    <li><span data-contrast="none"><span data-ccp-charstyle="normaltextrun" data-ccp-charstyle-defn="{&quot;ObjectId&quot;:&quot;0e0fa2d8-6448-415a-9093-8e7cc1120496|89&quot;,&quot;ClassId&quot;:1073872969,&quot;Properties&quot;:[469775450,&quot;normaltextrun&quot;,201340122,&quot;1&quot;,134233614,&quot;true&quot;,469778129,&quot;normaltextrun&quot;,335572020,&quot;1&quot;,469778324,&quot;Default Paragraph Font&quot;]}">Jack </span><span data-ccp-charstyle="normaltextrun">is a software developer working </span><span data-ccp-charstyle="normaltextrun">for</span><span data-ccp-charstyle="normaltextrun"> LinkedIn.</span></span><span data-ccp-props="{&quot;134233117&quot;:false,&quot;134233118&quot;:false,&quot;335559738&quot;:0,&quot;335559739&quot;:0}">&nbsp;</span></li>
+                    <li><span data-contrast="none"><span data-ccp-charstyle="normaltextrun">He</span><span data-ccp-charstyle="normaltextrun"> has several years of experience in developing educational platforms that </span><span data-ccp-charstyle="normaltextrun">provide</span><span data-ccp-charstyle="normaltextrun"> online learning.</span><span data-ccp-charstyle="eop" data-ccp-charstyle-defn="{&quot;ObjectId&quot;:&quot;0e0fa2d8-6448-415a-9093-8e7cc1120496|90&quot;,&quot;ClassId&quot;:1073872969,&quot;Properties&quot;:[469775450,&quot;eop&quot;,201340122,&quot;1&quot;,134233614,&quot;true&quot;,469778129,&quot;eop&quot;,335572020,&quot;1&quot;,469778324,&quot;Default Paragraph Font&quot;]}"></span></span><span data-ccp-props="{&quot;134233117&quot;:false,&quot;134233118&quot;:false,&quot;335559738&quot;:0,&quot;335559739&quot;:0}">&nbsp;</span></li>
+                    <li><span data-contrast="none"><span data-ccp-charstyle="normaltextrun">He focuses on developing software that is well designed and scalable to masses of students.</span></span><span data-ccp-props="{&quot;134233117&quot;:false,&quot;134233118&quot;:false,&quot;335559738&quot;:0,&quot;335559739&quot;:0}">&nbsp;</span></li>
+                </ul>
+                <p><strong><span data-contrast="auto">Sarah S.</span></strong><span data-ccp-props="{}">&nbsp;</span></p>
+                <ul>
+                    <li><span data-contrast="auto">Sarah is a software developer working as a part-time lecturer at the University of Cambridge.</span><span data-ccp-props="{}">&nbsp;</span></li>
+                    <li><span data-contrast="none"><span data-ccp-charstyle="normaltextrun">She</span><span data-ccp-charstyle="normaltextrun"> wishes to effectively model learners to </span><span data-ccp-charstyle="normaltextrun">provide</span><span data-ccp-charstyle="normaltextrun"> relevant videos that keep his learners engaged and learning.</span><span data-ccp-charstyle="eop"></span></span><span data-ccp-props="{&quot;134233117&quot;:false,&quot;134233118&quot;:false,&quot;335559738&quot;:0,&quot;335559739&quot;:0}">&nbsp;</span></li>
+                </ul>
+            </div>
+
+            <div>
+                <h3>Test cases</h3>
+                <p><span data-contrast="auto">We divided the tests into three&nbsp;cases with each user completing a survey for each one. The survey questions were based on different objectives with an additional option for the user to leave comments.</span><span data-ccp-props="{}">&nbsp;</span></p>
+                <p><strong><span data-contrast="auto">Case 1:</span></strong><span data-contrast="auto"> One of our main objectives for our visualisations was to make them understandable for learners. Therefore, we showed the user our bar charts, bubble charts and rose charts in 4 different color scales. In the survey questions, we asked them which color scale they found the clearest. Each tester could vote only once.</span><span data-ccp-props="{}">&nbsp;</span></p>
+                <p><strong><span data-contrast="auto">Case 2:</span></strong><span data-contrast="auto"> Another visualisation objective was to enable learners to evaluate their skills as well as areas for improvement. So, we gathered relevant information that learners would find useful by asking what data could be provided through interactions namely in the hover text. </span><span data-ccp-props="{&quot;134233117&quot;:false,&quot;134233118&quot;:false,&quot;201341983&quot;:0,&quot;335551550&quot;:1,&quot;335551620&quot;:1,&quot;335559685&quot;:0,&quot;335559737&quot;:0,&quot;335559738&quot;:0,&quot;335559739&quot;:0,&quot;335559740&quot;:259}">&nbsp;</span></p>
+                <p><strong><span data-contrast="auto">Case 3:</span></strong><span data-contrast="auto"> We developed a web application to display the visualisations to mimic the behavior of an educational platform that uses TrueLearn. We presented it to our surveyors and asked them to rate the web application in terms of ease of use, understanding, and usefulness.</span><span data-ccp-props="{}">&nbsp;</span></p>
+            </div>
+
+            <div>
+                <h3>Feedback</h3>
+            </div>
+            
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8">
+                <img src="assets/img/testing/user-acceptance.png" class="img-fluid">
+            </div>
+            <div class="col-lg-2"></div>
+            
+            <div>
+                <h3>Conclusion</h3>
+                <p><span data-contrast="auto">After the results mentioned above, we made the following changes to our python library:</span><span data-ccp-props="{}">&nbsp;</span></p>
+                <ol style="list-style-type: lower-alpha;">
+                    <li><span data-contrast="auto">Based on case 1, we used the Greens color scale where we made darker shades represent greater confidence in our&nbsp;classifier's prediction.</span><span data-ccp-props="{}">&nbsp;</span></li>
+                    <li><span data-contrast="auto">Based on case 2, we decided to include the topic, mean (skill level) and variance (confidence/certainty) in the hover text and inserted an additional parameter into the plotting function so users can choose how many videos to include the number of videos watched for that given topic and the date of the last video watched.</span><span data-ccp-props="{}">&nbsp;</span></li>
+                    <li><span data-contrast="auto">Based on case 3, we simplified the transitions involved in selecting the type of visualisation and adding subjects to be visualised by allowing for the user to click on them respectively.</span><span data-ccp-props="{}">&nbsp;</span></li>
+                </ol>
+                <p><span data-contrast="auto">Overall, the user acceptance tests have allowed for improved visualisations whilst also increasing the user friendliness of our web application.</span><span data-ccp-props="{&quot;335559685&quot;:0}">&nbsp;</span></p>
+            </div>
+            
         </div>
 
 
