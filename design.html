@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -13,7 +14,9 @@
     <link href="assets/img/logos/TL-logo.png" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800|Montserrat:300,400,700" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800|Montserrat:300,400,700"
+        rel="stylesheet">
 
     <!-- Vendor CSS Files -->
     <link href="assets/vendor/aos/aos.css" rel="stylesheet">
@@ -37,157 +40,232 @@
 <body>
 
 
-<!-- ======= Header/top bar ======= -->
-<header id="header" class="d-flex align-items-center">
-    <div class="container d-flex justify-content-between">
+    <!-- ======= Header/top bar ======= -->
+    <header id="header" class="d-flex align-items-center">
+        <div class="container d-flex justify-content-between">
 
-        <div id="logo">
-            <h1><a href="index.html">True<span>Learn</span></a></h1>
-            <!-- Uncomment below if you prefer to use an image logo -->
-            <!-- <a href="index.html"><img src="assets/img/logo.png" alt=""></a>-->
-        </div>
-
-        <nav id="navbar" class="navbar">
-            <ul>
-                <li class="dropdown"><a href="index.html"><span>Home</span> <i class="bi bi-chevron-down"></i></a>
-                    <ul>
-                        <li><a class="nav-link scrollto" href="index.html#about">Abstract</a></li>
-                        <li><a class="nav-link scrollto" href="index.html#portfolio">Portfolio</a></li>
-                        <li><a class="nav-link scrollto" href="#">Project Timeline</a></li>
-                        <li><a class="nav-link scrollto" href="index.html#team">Team</a></li>
-                    </ul>
-                </li>
-                <li><a class="nav-link" href="requirements.html">Requirements</a></li>
-                <li><a class="nav-link" href="research.html">Research</a></li>
-                <li><a class="nav-link" href="design.html">System Design</a></li>
-                <li><a class="nav-link" href="implementation.html">Implementation</a></li>
-                <li><a class="nav-link" href="testing.html">Testing</a></li>
-                <li><a class="nav-link" href="evaluation.html">Evaluation</a></li>
-
-                <li class="dropdown"><a href="appendices.html"><span>Appendices</span><i class="bi bi-chevron-down"></i></a>
-                    <ul>
-                        <li><a class="nav-link scrollto" href="#">Documentation</a> </li>
-                        <li><a class="nav-link scrollto" href="#">Development Blog</a></li>
-                        <li><a class="nav-link scrollto" href="#">Monthly Videos</a> </li>
-                        <li><a class="nav-link scrollto" href="#">License</a> </li>
-                        <li><a class="nav-link scrollto" href="#">Privacy policy</a> </li>
-                    </ul>
-                </li>
-            </ul>
-            <i class="bi bi-list mobile-nav-toggle"></i>
-        </nav><!-- .navbar -->
-
-    </div>
-</header><!-- End Header -->
-
-<!-- ======= Banner ======= -->
-<section id="banner">
-    <div class="banner-content" data-aos="fade-up">
-        <h2>System Design</h2>
-    </div>
-</section>
-<!-- End Banner -->
-
-<main>
-    <section id="architecture">
-        <div class="container" data-aos="fade-up">
-            <div class="section-header">
-                <h2>System Architecture</h2>
-                <img src="assets/img/system-design/architecture.png" class="img-fluid" alt="">
-                <p> To utilise the TrueLearn library for modeling users and predicting their engagement, developers need to convert the raw text data into Wikipedia topics using truelearn.preprocessing. Once the topics are extracted, developers can initialise an EventModel object using truelearn.models. They can then use this model and a label indicating the learner's engagement in the given event to train the classifier in truelearn.learning. </p>
-                <br><p>Internally, the classifier uses information from events and labels to update the LearnerModel, which can be used for interactive visualisations via truelearn.utils.visualisations. These visualisations help learners reflect on their learning. In addition, the updated LearnerModel allows the classifier to make accurate predictions about the learner's engagement in future events. </p>
-                <br><p>Developers can also use the PEEK dataset, a large novel dataset on learner engagement with educational videos, through truelearn.datasets to experiment with TrueLearn and apply different metrics defined in truelearn.utils.metrics to evaluate the classifier's performance. </p>
+            <div id="logo">
+                <h1><a href="index.html">True<span>Learn</span></a></h1>
+                <!-- Uncomment below if you prefer to use an image logo -->
+                <!-- <a href="index.html"><img src="assets/img/logo.png" alt=""></a>-->
             </div>
-        </div>
-    </section>
-    <section id="structure">
-        <div class="container" data-aos="fade-up">
-            <div class="section-header">
-                <h2>Library Structure</h2>
 
-                <p>The TrueLearn library is designed to be modular and extensible. Developers can easily add new features to the library by creating new classes that inherit from the base classes in each of the respective modules, which are listed below:</p>
-                <div class="text-center"><img src="assets/img/system-design/structure.png" class="img-fluid" alt=""></div>
+            <nav id="navbar" class="navbar">
                 <ul>
-                    <li><strong>truelearn.datasets</strong>: <br>Contains the functions to download and use the PEEK dataset.</li>
-                    <li><strong>truelearn.learning</strong>: <br>Contains the implementation of all TrueLearn classifiers.</li>
-                    <li><strong>truelearn.models</strong>: <br>Contains the LearnerModel and EventModel classes.</li>
-                    <li><strong>truelearn.preprocessing</strong>: <br>Contains functions to extract topics from raw text data (Wikifier).</li>
-                    <li><strong>truelearn.tests</strong>: <br>Contains unit tests for the library.</li>
-                    <li><strong>truelearn.utils</strong>: <br>Contains functions to evaluate the classifiers performance and visualise the LearnerModel.</li>
-                    <ul>
-                        <li><strong>truelearn.utils.metrics</strong>:<br>Contains evaluation functions for the classifiers such as accuracy, precision, recall, and f1 score.</li>
-                        <li><strong>truelearn.utils.visualisations</strong>: <br>Contains the plotting functions and classes such as RosePlotter, WordPlotter and LinePlotter.</li>
-                    </ul>
+                    <li class="dropdown"><a href="index.html"><span>Home</span> <i class="bi bi-chevron-down"></i></a>
+                        <ul>
+                            <li><a class="nav-link scrollto" href="index.html#about">Abstract</a></li>
+                            <li><a class="nav-link scrollto" href="index.html#portfolio">Portfolio</a></li>
+                            <li><a class="nav-link scrollto" href="#">Project Timeline</a></li>
+                            <li><a class="nav-link scrollto" href="index.html#team">Team</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="nav-link" href="requirements.html">Requirements</a></li>
+                    <li><a class="nav-link" href="research.html">Research</a></li>
+                    <li><a class="nav-link" href="design.html">System Design</a></li>
+                    <li><a class="nav-link" href="implementation.html">Implementation</a></li>
+                    <li><a class="nav-link" href="testing.html">Testing</a></li>
+                    <li><a class="nav-link" href="evaluation.html">Evaluation</a></li>
+
+                    <li class="dropdown"><a href="appendices.html"><span>Appendices</span><i
+                                class="bi bi-chevron-down"></i></a>
+                        <ul>
+                            <li><a class="nav-link scrollto" href="#">Documentation</a> </li>
+                            <li><a class="nav-link scrollto" href="#">Development Blog</a></li>
+                            <li><a class="nav-link scrollto" href="#">Monthly Videos</a> </li>
+                            <li><a class="nav-link scrollto" href="#">License</a> </li>
+                            <li><a class="nav-link scrollto" href="#">Privacy policy</a> </li>
+                        </ul>
+                    </li>
                 </ul>
-            </div>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav><!-- .navbar -->
+
+        </div>
+    </header><!-- End Header -->
+
+    <!-- ======= Banner ======= -->
+    <section id="banner">
+        <div class="banner-content" data-aos="fade-up">
+            <h2>System Design</h2>
         </div>
     </section>
-    <section id="design patterns">
-        <div class="container" data-aos="fade-up">
-            <div class="section-header">
-                <h2>Design Patterns</h2>
+    <!-- End Banner -->
+
+    <main>
+        <section id="architecture">
+            <div class="container" data-aos="fade-up">
+                <div class="section-header">
+                    <h2>System Architecture</h2>
+                    <img src="assets/img/system-design/architecture.png" class="img-fluid" alt="">
+                    <p> To utilise the TrueLearn library for modeling users and predicting their engagement, developers
+                        need to convert the raw text data into Wikipedia topics using truelearn.preprocessing. Once the
+                        topics are extracted, developers can initialise an EventModel object using truelearn.models.
+                        They can then use this model and a label indicating the learner's engagement in the given event
+                        to train the classifier in truelearn.learning. </p>
+                    <br>
+                    <p>Internally, the classifier uses information from events and labels to update the LearnerModel,
+                        which can be used for interactive visualisations via truelearn.utils.visualisations. These
+                        visualisations help learners reflect on their learning. In addition, the updated LearnerModel
+                        allows the classifier to make accurate predictions about the learner's engagement in future
+                        events. </p>
+                    <br>
+                    <p>Developers can also use the PEEK dataset, a large novel dataset on learner engagement with
+                        educational videos, through truelearn.datasets to experiment with TrueLearn and apply different
+                        metrics defined in truelearn.utils.metrics to evaluate the classifier's performance. </p>
+                </div>
             </div>
-            <div class="row">
-                <div><strong>Functional pattern</strong> <br><p> To write self-explanatory code, we utilise the functional design pattern via Python's diverse Iterator APIs. We used this pattern in methods that restructure data in <strong>truelearn.datasets</strong> and classifiers in <strong>truelearn.learning</strong>. This significantly improves the readability of our codebase as we are programming declaratively rather than imperatively.</p></div>
-                <div><strong>Strategy pattern</strong> <br><p>To ensure the extensibility of our method, we use the strategy pattern in <strong>truelearn.datasets</strong>. Developers can pass their custom knowledge component generator functions to the <i>load_peek_dataset</i> method, which will generate the knowledge components they want. This is especially useful if developers create their own knowledge components and want the <strong>truelearn.datasets</strong> package to use their type.</p></div>
-                <div><strong>Template pattern</strong> <br><p> The Knowledge, Novelty and Interest Classifiers share a lot of similar code as they only differ in the way they update the learner model and make predictions. Therefore, we apply the template pattern to implement shared logic and use dynamic dispatch to allow each classifier to implement their respective parts, which reduces code redundancy and makes the code more maintainable.</p></div>
-                <div><strong>Duck Typing</strong><br><p>Duck typing is a strategy commonly used in Python and other dynamically typed programming languages, it’s based on the idea that an object is not as important as its behaviour. In other words, if an object walks like a duck and quacks like a duck, then it is a duck, regardless of its actual type. We applied this idea when designing <strong>truelearn.models</strong> to make our library more extensible. For example, developers do not need to inherit our classes to create their knowledge components. They just need to make sure that their implementation has the necessary methods and can be used correctly by other methods in the library.</p>
+        </section>
+        <section id="structure">
+            <div class="container" data-aos="fade-up">
+                <div class="section-header">
+                    <h2>Library Structure</h2>
+
+                    <p>The TrueLearn library is designed to be modular and extensible. Developers can easily add new
+                        features to the library by creating new classes that inherit from the base classes in each of
+                        the respective modules, which are listed below:</p>
+                    <div class="text-center"><img src="assets/img/system-design/structure.png" class="img-fluid" alt="">
+                    </div>
                     <ul>
-                        <li><p>The traditional approach to this means the programmer doesn’t have a way of specifying the necessary functionality as the behaviour is implicit. To overcome this we make use of the <i>Protocol</i> class introduced in Python 3.8 to explicitly define the required behaviour. However, for our library to be compatible with Python 3.7, we use the official Python extension <i>typing_extensions</i> to port the <i>Protocol</i> class to Python 3.7.</p> </li>
+                        <li><strong>truelearn.datasets</strong>: <br>Contains the functions to download and use the PEEK
+                            dataset.</li>
+                        <li><strong>truelearn.learning</strong>: <br>Contains the implementation of all TrueLearn
+                            classifiers.</li>
+                        <li><strong>truelearn.models</strong>: <br>Contains the LearnerModel and EventModel classes.
+                        </li>
+                        <li><strong>truelearn.preprocessing</strong>: <br>Contains functions to extract topics from raw
+                            text data (Wikifier).</li>
+                        <li><strong>truelearn.tests</strong>: <br>Contains unit tests for the library.</li>
+                        <li><strong>truelearn.utils</strong>: <br>Contains functions to evaluate the classifiers
+                            performance and visualise the LearnerModel.</li>
+                        <ul>
+                            <li><strong>truelearn.utils.metrics</strong>:<br>Contains evaluation functions for the
+                                classifiers such as accuracy, precision, recall, and f1 score.</li>
+                            <li><strong>truelearn.utils.visualisations</strong>: <br>Contains the plotting functions and
+                                classes such as RosePlotter, WordPlotter and LinePlotter.</li>
+                        </ul>
                     </ul>
                 </div>
             </div>
-        </div>
-    </section>
-    <section id="class diagrams">
-        <div class="container" data-aos="fade-up">
-            <div class="section-header">
-                <h2>Class Diagrams</h2>
+        </section>
+        <section id="design patterns">
+            <div class="container" data-aos="fade-up">
+                <div class="section-header">
+                    <h2>Design Patterns</h2>
+                </div>
+                <div class="row">
+                    <div><strong>Functional pattern</strong> <br>
+                        <p> To write self-explanatory code, we utilise the functional design pattern via Python's
+                            diverse Iterator APIs. We used this pattern in methods that restructure data in
+                            <strong>truelearn.datasets</strong> and classifiers in <strong>truelearn.learning</strong>.
+                            This significantly improves the readability of our codebase as we are programming
+                            declaratively rather than imperatively.
+                        </p>
+                    </div>
+                    <div><strong>Strategy pattern</strong> <br>
+                        <p>To ensure the extensibility of our method, we use the strategy pattern in
+                            <strong>truelearn.datasets</strong>. Developers can pass their custom knowledge component
+                            generator functions to the <i>load_peek_dataset</i> method, which will generate the
+                            knowledge components they want. This is especially useful if developers create their own
+                            knowledge components and want the <strong>truelearn.datasets</strong> package to use their
+                            type.
+                        </p>
+                    </div>
+                    <div><strong>Template pattern</strong> <br>
+                        <p> The Knowledge, Novelty and Interest Classifiers share a lot of similar code as they only
+                            differ in the way they update the learner model and make predictions. Therefore, we apply
+                            the template pattern to implement shared logic and use dynamic dispatch to allow each
+                            classifier to implement their respective parts, which reduces code redundancy and makes the
+                            code more maintainable.</p>
+                    </div>
+                    <div><strong>Duck Typing</strong><br>
+                        <p>Duck typing is a strategy commonly used in Python and other dynamically typed programming
+                            languages, it’s based on the idea that an object is not as important as its behaviour. In
+                            other words, if an object walks like a duck and quacks like a duck, then it is a duck,
+                            regardless of its actual type. We applied this idea when designing
+                            <strong>truelearn.models</strong> to make our library more extensible. For example,
+                            developers do not need to inherit our classes to create their knowledge components. They
+                            just need to make sure that their implementation has the necessary methods and can be used
+                            correctly by other methods in the library.
+                        </p>
+                        <ul>
+                            <li>
+                                <p>The traditional approach to this means the programmer doesn’t have a way of
+                                    specifying the necessary functionality as the behaviour is implicit. To overcome
+                                    this we make use of the <i>Protocol</i> class introduced in Python 3.8 to explicitly
+                                    define the required behaviour. However, for our library to be compatible with Python
+                                    3.7, we use the official Python extension <i>typing_extensions</i> to port the
+                                    <i>Protocol</i> class to Python 3.7.
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-        </div>
-    </section>
-    <section id="api">
-        <div class="container" data-aos="fade-up">
-            <div class="section-header">
-                <h2>Public API</h2>
+        </section>
+        <section id="class diagrams">
+            <div class="container" data-aos="fade-up">
+                <div class="section-header">
+                    <h2>Class Diagrams</h2>
+                    <p>The following are class diagrams for the three most important sub-packages in truelearn:
+                        <code>truelearn.models</code>, <code>truelearn.learning</code>,
+                        <code>truelearn.utils.visualisations</code>.
+                    </p>
+                    <br>
+                    <img src="assets/img/class-diagram/truelearn.models.png" class="img-fluid" alt="">
+                    <br>
+                    <br>
+                    <img src="assets/img/class-diagram/truelearn.learning.png" class="img-fluid" alt="">
+                    <br>
+                    <br>
+                    <img src="assets/img/class-diagram/truelearn.utils.visualisations.png" class="img-fluid" alt="">
+                </div>
             </div>
-            <div>
-                <p>Please see our <a href="https://truelearn.readthedocs.io/en/latest/">documentation</a> for the list of the public API provided.</p>
+        </section>
+        <section id="api">
+            <div class="container" data-aos="fade-up">
+                <div class="section-header">
+                    <h2>Public API</h2>
+                </div>
+                <div>
+                    <p>Please see our <a href="https://truelearn.readthedocs.io/en/latest/">documentation</a> for the
+                        list of the public API provided.</p>
+                </div>
             </div>
-        </div>
-    </section>
-</main>
-<!-- ======= Footer ======= -->
-<footer id="footer">
-    <div class="container">
-        <div class="copyright">
-            &copy; Copyright <strong>TrueLearn</strong>. All Rights Reserved
-        </div>
-        <div class="credits">
-            <!--
+        </section>
+    </main>
+    <!-- ======= Footer ======= -->
+    <footer id="footer">
+        <div class="container">
+            <div class="copyright">
+                &copy; Copyright <strong>TrueLearn</strong>. All Rights Reserved
+            </div>
+            <div class="credits">
+                <!--
             All the links in the footer should remain intact.
             You can delete the links only if you purchased the pro version.
             Licensing information: https://bootstrapmade.com/license/
             Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Reveal
           -->
-            <div class = "text-center">Designed by Karim Djemili</div>
-            Theme from <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                <div class="text-center">Designed by Karim Djemili</div>
+                Theme from <a href="https://bootstrapmade.com/">BootstrapMade</a>
 
+            </div>
         </div>
-    </div>
-</footer><!-- End Footer -->
+    </footer><!-- End Footer -->
 
-<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
 
-<!-- Vendor JS Files -->
-<script src="assets/vendor/aos/aos.js"></script>
-<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-<script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
-<!-- Template Main JS File -->
-<script src="assets/js/main.js"></script>
+    <!-- Template Main JS File -->
+    <script src="assets/js/main.js"></script>
 </body>
 
 </html>
