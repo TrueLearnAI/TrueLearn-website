@@ -87,6 +87,189 @@
     </div>
 </section>
 
+<main>
+    <section id="research">
+        <div class="container" data-aos="fade-up">
+            <div class="section-header">
+                <h2>Background</h2>
+            </div>
+            <div class="row">
+                <p>Learning recommendation systems have become an increasingly popular topic of research in the past years. In contrast to a traditional content recommender, a learning recommendation system requires understanding of the user’s knowledge and interests [1]. TrueLearn, the project we have been assigned to, is an application of research that aims to provide this information by modelling learners’ knowledge and interests from their engagement with open educational resources. It “presents the foundations towards building a dynamic, scalable and transparent recommendation system for education” [1].</p>
+                <p>Because we already have the full code for TrueLearn, our objective for this project is to make TrueLearn more accessible to developers and learners. This involves refactoring the existing code into a Python library and generating visualisations from the trained model, with the goal of integrating said visualisations onto the open education platform X5Learn [2]. These visualisations will act as an open learner model, using data collected from users on the platform to let them visualise their current knowledge across topics and track their progress through time. In the spirit of open education, the library will be released using the MIT license which allows for reuse, modification, distribution, publishing, and sublicensing [3], with no restrictions other than a copy of the license be present.</p>
+                <p>In the upcoming sections we will evaluate these two components individually, comparing each to state-of-the-art competing solutions and proposing technologies that could be used to match their strengths and overcome their shortcomings.</p>
+            </div>
+
+            <div class="section-header">
+                <h2>Python Library</h2>
+            </div>
+            <div>
+                <p>Considering that we already have the code for each model of TrueLearn, what we need to do is to refactor the code and make it into a library. To make it easier for other developers to use and learn TrueLearn, the final library should:</p>
+                <ul>
+                    <li>be extensible, so that other developers can easily add more functionalities to it</li>
+                    <li>have thorough documentation for each method</li>
+                    <li>be tested by unit tests</li>
+                    <li>be properly analysed and formatted by linters and formatters</li>
+                </ul>
+                <p>In the next few sections, we will carefully analyse how to achieve the above goals.</p>
+            </div>
+            <div>
+                <h3>Designing the API</h3>
+                <p>To make the library extensible, we must have a clear and easy-to-use API. To decide what this would look like, we reviewed the API design of other related Python machine learning libraries, such as scikit-learn and pyBKT.</p>
+
+                <p>Scikit-learn is an open-source library, having over 50000 stars and 20000 forks on GitHub, which means that it serves as a prime example of a library that is extendable and easily understood as it is being worked on by so many different developers [4]. According to a paper written by the creators of scikit-learn, this was achieved by adhering to various design principles like [5]:</p>
+
+                <ul>
+                    <li>Consistency: “All objects share a consistent interface composed of a limited set of methods.”</li>
+                    <li>Inspection: “Constructor parameters and parameter values determined by learning algorithms are stored and exposed as public attributes.”</li>
+                    <li>Non-proliferation of classes: “Learning algorithms are the only objects to be represented using custom classes. Datasets are represented as NumPy arrays or SciPy sparse matrices. Hyper-parameter names and values are represented as standard Python strings or numbers whenever possible.”</li>
+                    <li>Composition: “Whenever feasible, meta-algorithms parametrized on other algorithms are implemented and composed from existing building blocks.”</li>
+                    <li>Sensible defaults: “Whenever an operation requires a user-deﬁned parameter, an appropriate default value is deﬁned by the library.”</li>
+                </ul>
+
+                <p>These five design principles are reflected in the three main interfaces of scikit-learn: estimator, predictor, and transformer. The estimator interface provides consistent interfaces for training the model (<code>fit</code>) and public attributes (<code>coef_</code>) for inspection of the internal states of the model. The predictor interface provides consistent interfaces for utilizing the model (<code>predict</code>, <code>predict_prob</code>) and assessing the performance of the model (<code>score</code>). The existence of transformer interface (<code>transform</code> method) makes it easy for users to perform common pre-processing on their data.</p>
+                <p>In terms of data representation of scikit-learn, “datasets are encoded in NumPy multidimensional arrays for dense data and as SciPy sparse matrices for sparse data” [5]. This allows scikit-learn to utilize the efficient Numpy and SciPy operations while writing readable and maintainable code. For TrueLearn, the only problem with the above representation is that “the public interface is oriented towards processing batches of samples,” but our library expects data to be more “discrete” because the user engagement with some videos is not likely obtained in large batches at the same time [5]. Therefore, we will provide functions that train on a single piece of data.</p>
+                <p>Finally, it is worth mentioning what makes scikit-learn extensible and its code more reusable. Apart from the interface design mentioned above, scikit-learn's extensibility comes from duck typing, which is based on the idea that "If it walks like a duck and it quacks like a duck, then it must be a duck" [5, 6]. This means that one can use their model with existing implementations of the library, if they design their model according to the three implicit interfaces mentioned above. This provides a lot of flexibility for developers as they “are not forced to inherit from any scikit-learn class” [5].</p>
+                <p>Other libraries we will look at are pyBKT [7]. While not as popular as scikit-learn, pyBKT is relevant in content to TrueLearn as it implements Bayesian Knowledge Tracing, another algorithm to model the learner. It provides an estimator interface like scikit-learn, such as <code>fit</code>, but adds data loading functions such as <code>read_csv</code> to its <code>Model</code> class, which makes it confusing.</p>
+                <p>After considering design principles used by these two libraries, we finally decided to use the scikit-learn API design as our main reference and have our library implement its estimator, predictor, and transformer interface. This design allows us to reduce the learning cost of the user and makes TrueLearn easier to extend, maintain and use.</p>
+            </div>
+
+            <div>
+                <h3>Documentation</h3>
+                <p>Since the library is written in Python, we can automatically generate the documentation using docstrings rather than write it out manually. The advantage of this is that the documentation is right above the code and is thus easier to update and maintain, as well as being more useful to programmers. In addition, documentation generators can embed their output into HTML files which means that we would easily be able to deploy the docs to a website.</p>
+                <p>Sphinx is by far the most popular Python documentation generator. It supports docstrings written in reStructuredText and Markdown, can export docstrings to HTML, LaTeX, and manual pages, and allows cross-references between classes and functions [8]. Also, it has a rich extensions system, allowing it to parse docstrings in different styles [9]. In terms of theming, Sphinx supports the use of out-of-the-box themes for exported files [10]. However, one of its drawbacks is that it requires some configuration based on Makefile, conf.py and index.rst.</p>
+                <p>pdoc is another widely used Python documentation generator. It requires no configuration, supports multiple marked up languages for docstrings, and allows us to apply docstrings to variables. However, it has limited theming support and can only export to HTML format. [11]</p>
+                <p>pydoctor is another documentation generator, like pdoc. It does not require much configuration and supports multiple markup languages. It can generate HTML and other formats, like LaTeX and manual pages, by integrating with Sphinx. However, the documentation of the library itself is not detailed. [12]</p>
+                <p>After considering the options above, we picked Sphinx as our document generator because:</p>
+
+                <ol>
+                    <li>it supports themes and can output documents in a variety of formats, allowing us to provide richer layout for our documentations</li>
+                    <li>it supports cross-referencing</li>
+                    <li>it has detailed documentation on its usage, which would allow us to learn how to use it and integrate it into the project more rapidly</li>
+                </ol>
+            </div>
+
+            <div>
+                <h3>Testing</h3>
+            </div>
+            <div>
+                <h4>Unit Testing</h4>
+                <p>Since we plan to release the refactored code as a library, it is of the utmost importance that we carry out thorough testing during refactoring so that if we do discover any bugs, we can fix them and release a product that works as intended. The two most popular packages for writing unit tests in Python are pytest [13] and unittest [14].  </p>
+                <p>unittest is a built-in unit testing library for Python, inspired by Junit. It supports generating mocking data, sharing of setup and shutdown code for tests, and aggregation of tests into collections. However, it is a bit verbose: we need to set up some boilerplate classes inherited from a base <code>TestCase</code> class with test cases defined in it. [14] </p>
+                <p><code>pytest</code>, compared with unittest, is a more modern and flexible framework. It supports running setup code for tests, grouping tests together and automatically detecting test cases. It allows us to create tests in a much more readable syntax: we do not need to group tests cases in classes, but instead can write them as normal functions. At the same time, it has a rich plugin system, including plugins like pytest-cov (for coverage report), pytest-dependency (for specify test dependency), pytest-mock (for generating mock data) etc. [13] </p>
+                <p>Overall, while <code>unittest</code> is a perfectly fine testing framework, pytest provides a much easier-to-use syntax and supports features like test cases detection and plugin systems. Thus, we opt for <code>pytest</code> for our unit testing framework. </p>
+            </div>
+            <div>
+                <h4>Test Coverage</h4>
+                <p>We will utilize unit testing with coverage to ensure that most of the code pathways are tested for erroneous results to ensure the library is as bug free as possible. Some packages that generate test coverage reports are trace and coverage.py.</p>
+                <p><code>trace</code> is a built-in Python module that supports program execution tracing, code coverage generation, and call stack examination [15]. However, it is cumbersome to use when running it with tests and only generates a text version of the coverage report [16].</p>
+                <p><code>coverage.py</code> is much more powerful than trace in terms of coverage generation, as it supports zero-configuration use, integrates with different unit testing frameworks, and can generate different outputs, including text, LCOV and HTML [17]. Its support of HTML enables us to interactively check for untested code paths. Also, coverage.py supports not only line coverage but also branch coverage, allowing us to examine the effectiveness of our tests from different perspectives.</>
+                <p>We ended up choosing coverage.py because it has a clear advantage in generating test coverage reports.</p>
+            </div>
+            <div>
+                <h4>Documentation Testing</h4>
+                <p>Along with good documentation, we will also use <code>doctest</code> to ensure that the content of our documentation remains consistent with the code.</p>
+                <p><code>doctest</code> is a built-in Python module that supports documentation testing [18]. It can extract the code snippets from the doc string, execute them and compare the results with the expected output. It can be used directly via a command or manual import.</p>
+                <p><code>pytest</code>, our test framework of choice, wraps and extends <code>doctest</code> to allow it to be called more easily. It allows us to configure the <code>doctest</code> via pytest’s configuration file, skip the tests, and run the test inside some fixtures [19].</p>
+                <p>Given that we have chosen <code>pytest</code> as our unit testing framework and that it offers a more convenient way and more features to perform documentation testing, we decided to use it as our documentation testing framework.</p>
+            </div>
+
+            <div>
+                <h3>Linters and Formatters</h3>
+                <p>A static analyser will be used to ensure greater correctness and consistency in our code. When choosing a linter for our python library there are several considerations that we must consider:</p>
+
+                <ol>
+                    <li>First, we want to ensure the code follows commonly used conventions and code style to ensure consistency of our library when compared with others. This allows the users of the library to quickly gain familiarity with it and aids in its explainability.</li>
+                    <li>Second, not only is the code style important but we must ensure there are no logical errors.</li>
+                </ol>
+
+                <p>Due to the nature of the software, we are developing, it is vital that any issues are not propagated to the users of it, hence ensuring correctness through rigorous testing is key to the success of the project.</p>
+                <p>Some linters which support our required needs are PyLint [20], Prospector [21] and Flake8 [22]. PyLint was released in 2001 and benefits from a long history of maintenance and bug fixes and is a standalone library, it covers both requirements listed. Both Prospector and Flake8 are ‘wrappers’ meaning they incorporate the functionality of several libraries into one, namely Flake8 incorporates pyflakes [23] (logical errors), pycodestyle [24] and mccabe [25] (software complexity checker) and Prospector is a wrapper around Pylint, pycodestyle, mccabe and additional libraries to check for unused code, the validity of the project setup file amongst other things.</p>
+                <p>In conclusion, when running static analysis, it is beneficial to use multiple analysers, however issues can occur when combining them, in addition to the cost associated with additional dependencies. Consequently, using a wrapped library helps to avoid these conflicts and allows for easier maintenance, thus, for this project Prospector would be the most ideal as it benefits from out of the box performance, ease of setup and requires minimal configuration. [21].</p>
+            </div>
+
+            <div class="section-header">
+                <h2>Generating the visualisations</h2>
+            </div>
+            <div>
+                <p>This section of the project involves:</p>
+                <ol>
+                    <li>enabling users to generate their own visualisations by giving them a straightforward way of extracting data from their models</li>
+                    <li>constructing an open-learner model by generating visualisations based on data collected from X5Learn users and the output of the algorithms</li>
+                </ol>
+            </div>
+            <div>
+                <h3>Returning the right data</h3>
+                <p>To achieve these objectives, we will start out by writing a class that will contain methods to handle converting whatever object the user passes to it into a ready-to-use representation of the data. This would achieve the 1st objective, since users who call these methods would obtain as output a data structure containing the information they wanted and would then be able to use this data to generate whichever visualisations they wish to in a very straightforward manner, without having to pre-process the data in any significant way.</p>
+                <p>It would also help in achieving the 2nd objective, since getting a hold of clean, usable data would be our first step in generating the visualisations needed for the open learner model and adding the class and methods to the library would present us with an effortless way of obtaining said data and completing this first step.</p>
+            </div>
+            <div>
+                <h3>Picking the visualisations</h3>
+                <p>With the right data in hand all that is left is using it to generate the visualisations.</p>
+                <p>To do so, we first need to determine whether the visualisations will be static or dynamic, or in other words whether the user will be able to interact with them. Because the visualisations are there to help users understand something, it is essential that they are easy to understand. Interactivity could go a long way to making the visualisations easily understood, since it would allow users to zoom into them and view things from a different lens. This gives us the possibility of using complex, multifaceted visualisations since we would have ample room to explain to the users what it is that they are seeing. On the other hand, static visualisations do not provide the same level of insight into the data that is being visualized compared to their dynamic counterparts, but they are much easier to generate. </p>
+                <p>The client expressed their wish to have both static and dynamic visualisations, with static ones being a must-have requirement so we will start out by generating static visualisations and, time-permitting, will then move onto creating dynamic ones. </p>
+            </div>
+            <div>
+                <h3>Generating the visualisations</h3>
+                <p>In the case of static visualisations, we could bundle the library with additional methods that would take in the data values in our data structure and plot them to generate different charts.</p>
+                <p>One of the most popular tools for plotting data in Python is matplotlib [26]. matplotlib has many advantages, of which the most significant are that it is widely used, which means that there is a great amount of support and learning resources available, and that it gives developers low-level control over the plots, which makes them highly customisable down to the finest details.</p>
+                <p>An alternative to matplotlib is seaborn [27]. This is built on top of matplotlib and shares many of its merits, but it also gives programmers a much higher-level overview of the plotting process. This makes it simpler to generate functional and aesthetically pleasing graphs, but also makes it harder to change intricate details in plots. However, it also has a much smaller learning curve.</p>
+                <p>A third option is Plotly [28]. Plotly is yet another library built on top of matplotlib. The main difference between the two is that plotly can be used to generate both static and dynamic visualisations. “Plotly figures are interactive when viewed in a web browser” [29] and plotly gives developers the option to export their visualisations to HTML format for web display in addition to the classic JPEG and PNG. This means that by using plotly, we would effectively be “killing two birds with one stone” since we could plot the data and use the same object to generate both the static and dynamic visualisations, which would save us a lot of time.</p>
+                <p>When it comes to dynamic visualisations, the most used library is D3.js [30]. D3.js is to interactive visualisations what matplotlib is to static ones, providing low-level control over charts at the cost of a steep learning curve.</p>
+                <p>A popular alternative to D3.js is Chart.js [31]. This library provides ready-to-use templates for many popular graphs, which means that we would not have to waste time building everything from the ground up. Furthermore, the library allows us to mix different charts into a single plot and it can be easily integrated with React thanks to many Chart.js charts already existing as React components under the react-chartjs-2 library [32]. This would help achieve the must-have requirement of deploying the visualisations onto a React demo app.</p>
+                <p>D3.js and Chart.js are JavaScript libraries, which means that if were to use these we would have to write the code generating the visualisations on the front-end, but another option, already mentioned when discussing plotly, is to generate the visualisations right in the Python library and export them to the front-end. This could be done using mpld3 [33] which turns matplotlib plots into interactive visualisations made with D3.js. This means that we could again be “killing two birds with one stone” by generating static matplotlib visualisations in the library and then using those same visualisations to generate interactive ones, thus fulfilling both requirements in one fell swoop.</p>
+                <p>However, many of the tools mentioned above only bring surface-level interactivity such as legends, hover pop-ups and series toggling and can only be used to implement the most common charts and plots. With D3.js, the only limit is our imagination, and the library can be used to create many more, original, and unconventional visualisations with more possibilities for interaction such as [34] and [35].</p>
+                <p>Our aim in analysing the different libraries is to find the most suitable library that meets the project's needs. In conclusion, we will use plotly to generate static and dynamic visualisations due to its superior versatility, ease of use and integration, and interactivity. Matplotlib is more suitable for static visualisations whereas seaborn is specifically designed for statistical data visualisations and exploring data distributions hence we decided against using them as our main library. We may also utilise D3.js to create more interactable charts for the X5Learn platform, depending on how much time we have.</p>
+            </div>
+            <div>
+                <h3>Testing the visualisations</h3>
+                <p>Our main way, and the only way of determining whether the visualisations we have created are fit for purpose is to gather feedback from users. We will conduct surveys and interviews and, based on feedback, will adjust the visualisations accordingly.</p>
+            </div>
+
+            <div class="section-header">
+                <h2>References</h2>
+            </div>
+            <div class="row">
+                <p>[1]	S. Bulathwela, M. Pérez-Ortiz, E. Yilmaz, and J. Shawe-Taylor, “TrueLearn: A Family of Bayesian algorithms to match lifelong learners to open educational resources”, UCL Discovery - UCL Discovery, 01-Jan-2020. [Online]. Available: https://discovery.ucl.ac.uk/id/eprint/10111248/. [Accessed: 20-Mar-2023].</p>
+                <p>[2]	X5GON, X5Learn learning platform, 2023. [Online]. Available: https://x5learn.org/. [Accessed: 20-Mar-2023].</p>
+                <p>[3]	Snyk developers, “What is the MIT license?”, 2023, [Online]. Available: https://snyk.io/learn/what-is-mit-license/. [Accessed: 20-Mar-2023].</p>
+                <p>[4]	scikit-learn contributors, “scikit-learn: machine learning in Python”, Github repository, 2023, [Online]. Available: https://github.com/scikit-learn/scikit-learn. [Accessed: 20-Mar-2023].</p>
+                <p>[5]	L. Buitinck et al., “API design for Machine Learning Software: Experiences from the scikit-learn project,” arXiv.org, 01-Sep-2013. [Online]. Available: https://arxiv.org/abs/1309.0238. [Accessed: 20-Mar-2023].</p>
+                <p>[6]	Wikipedia contributors, “Duck typing”, Wikipedia, The Free Encyclopedia, 2023, [Online]. Available: https://en.wikipedia.org/wiki/Duck_typing. [Accessed: 20-Mar-2023].</p>
+                <p>[7]	pyBKT contributors, “pyBKT - Python implementation of Bayesian Knowledge Tracing and extensions”, Github repository, 2023, [Online]. Available: https://github.com/CAHLR/pyBKT. [Accessed: 20-Mar-2023].</p>
+                <p>[8]	G. Brandl, Sphinx documentation, 2021, [Online]. Available: http://sphinx-doc.org/sphinx.pdf. [Accessed: 20-Mar-2023].</p>
+                <p>[9]	The Hitchhiker’s Guide to Python, “Documentation”, 2022, [Online]. Available: https://docs.python-guide.org/writing/documentation/. [Accessed: 20-Mar-2023].</p>
+                <p>[10]	Sphinx contributors, “HTML Theming”, 2023, [Online]. Available: https://www.sphinx-doc.org/en/master/usage/theming.html. [Accessed: 20-Mar-2023].</p>
+                <p>[11]	pdoc contributors, “What is pdoc?”, 2023, [Online]. Available: https://pdoc.dev/docs/pdoc.html. [Accessed: 20-Mar-2023].</p>
+                <p>[12]	pydoctor contributors, pydoctor’s documentation, 2020, [Online]. Available: https://pydoctor.readthedocs.io/en/latest/index.html. [Accessed: 20-Mar-2023].</p>
+                <p>[13]	pytest contributors, “pytest: helps you write better programs”, 2015, [Online]. Available: https://docs.pytest.org/en/7.2.x/. [Accessed: 20-Mar-2023].</p>
+                <p>[14]	Python contributors, “unittest - Unit testing framework”, 2023, [Online]. Available: https://docs.python.org/3/library/unittest.html. [Accessed: 20-Mar-2023].</p>
+                <p>[15]	Python contributors, “trace - Trace or track Python statement execution”, 2023, [Online]. Available: https://docs.python.org/3/library/trace.html. [Accessed: 20-Mar-2023].</p>
+                <p>[16]	PyMOTW, “trace - Follow Python statements as they are executed”, 2020, [Online]. Available: http://pymotw.com/2/trace/. [Accessed: 20-Mar-2023].</p>
+                <p>[17]	Coverage.py contributors, Coverage.py documentation, 2022, [Online]. Available: https://coverage.readthedocs.io/en/6.5.0/. [Accessed: 20-Mar-2023].</p>
+                <p>[18]	Python contributors, “doctest - Test interactive Python examples”, 2023, [Online]. Available: https://docs.python.org/3/library/doctest.html. [Accessed: 20-Mar-2023].</p>
+                <p>[19]	pytest contributors, “How to run doctests”, 2015, [Online]. Available: https://docs.pytest.org/en/7.1.x/how-to/doctest.html. [Accessed: 20-Mar-2023].</p>
+                <p>[20]	pylint contributors, pylint package, PyPI, 2023, [Online]. Available: https://pypi.org/project/pylint/. [Accessed: 20-Mar-2023].</p>
+                <p>[21]	prospector contributors, prospector package, PyPI, 2023, [Online]. Available: https://pypi.org/project/prospector/. [Accessed: 20-Mar-2023].</p>
+                <p>[22]	Flake8 contributors, Flake8 documentation, 2016, [Online]. Available: https://flake8.pycqa.org/en/latest/. [Accessed: 20-Mar-2023].</p>
+                <p>[23]	pyflakes contributors, pyflakes package, PyPI, 2022, [Online]. Available: https://pypi.org/project/pyflakes/. [Accessed: 20-Mar-2023].</p>
+                <p>[24]	pycodestyle contributors, pycodestyle package, PyPI, 2022, [Online]. Available: https://pypi.org/project/pycodestyle/. [Accessed: 20-Mar-2023].</p>
+                <p>[25]	mccabe contributors, mccabe package, PyPI, 2022, [Online]. Available: https://pypi.org/project/mccabe/. [Accessed: 20-Mar-2023].</p>
+                <p>[26]	J. D. Hunter, “Matplotlib: A 2D graphics environment”, Computing in Science & Engineering, 9(3), 90–95, 2007. [Accessed: 20-Mar-2023].</p>
+                <p>[27]	M. Waskom et al., mwaskom/seaborn: v0.8.1 (September 2017), Zenodo, 2017. Available at: https://doi.org/10.5281/zenodo.883859. [Accessed: 20-Mar-2023].</p>
+                <p>[28]	Inc., P. T., Collaborative data science. Montreal, QC: Plotly Technologies Inc., 2015. Retrieved from https://plot.ly. [Accessed: 20-Mar-2023].</p>
+                <p>[29]	Plotly contributors, “Interactive HTML Export in Python”, 2023, [Online]. Available: https://plotly.com/python/interactive-html-export/. [Accessed: 20-Mar-2023].</p>
+                <p>[30]	M. Bostock, “D3.js - Data-Driven Documents,” 2012. [Online]. Available: http://d3js.org/ [Accessed: 20-Mar-2023].</p>
+                <p>[31]	Chart.js contributors, Chart.js documentation, 2023. [Online]. Available: https://www.chartjs.org/docs/latest/. [Accessed: 20-Mar-2023].</p>
+                <p>[32]	react-chartjs-2 contributors, react-chartjs-2 package, 2023, [Online]. Available: https://react-chartjs-2.js.org/. [Accessed: 20-Mar-2023].</p>
+                <p>[33]	mpld3 developers, mpld3 documentation, 2023, [Online]. Available: https://mpld3.github.io/. [Accessed: 20-Mar-2023].</p>
+                <p>[34]	Amboseli Trust for Elephants, Mavromatika, “The evolution of the Amboseli elephants population since 1972”, The Elephant Trust, 2017, [Online]. Available: https://www.elephanttrust.org/visualization/. [Accessed: 20-Mar-2023].</p>
+                <p>[35]	S. Carter, “Four Ways to Slice Obama’s 2013 Budget Proposal”, The New York Times, 2012, [Online]. Available: https://archive.nytimes.com/www.nytimes.com/interactive/2012/02/13/us/politics/2013-budget-proposal-graphic.html. [Accessed: 20-Mar-2023].</p>
+            </div>
+
+        </div>
+    </section>
+</main>
+
 <!-- ======= Footer ======= -->
 <footer id="footer">
     <div class="container">
