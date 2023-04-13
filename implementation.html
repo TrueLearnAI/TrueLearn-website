@@ -392,16 +392,16 @@
 
         <div class="section-header">
             <h2 id="datasets">Visualisations</h2>
-            <p>The <code>truelearn.utils.visualisations</code> package provides users with tools to generate various visualizations. </p>
+            <p>The <code>truelearn.utils.visualisations</code> package equips users with tools to generate various visualisations. </p>
         </div>
 
         <div>
             <h3>Dependencies</h3>
             <ul>
-                <li>Matplotlib: the most popular Python graphing library for generating visualisations. Provides advanced customisation for plots.</li>
-                <li>Plotly: a Python graphing library built on top of matplotlib. Provides fewer plots but charts generated with Plotly are interactive and can be exported to HTML.</li>
+                <li>Matplotlib: the most popular Python graphing library for generating visualisations. Provides advanced customisation options for plots.</li>
+                <li>Plotly: a Python graphing library built on top of Matplotlib. Provides fewer plots but charts generated with Plotly are interactive and can be exported to HTML.</li>
             </ul>
-            <p>Due to interactivity being a requirement for our project, we decided to use Plotly whenever possible and use matplotlib only to generate charts that were not possible with Plotly.</p>
+            <p>Due to interactivity being a requirement for our project, we decided to use Plotly whenever possible and use Matplotlib only to generate charts that were not possible with Plotly.</p>
         </div>
 
         <div class = "row">
@@ -410,7 +410,7 @@
                 <h3>BasePlotters</h3>
                 <p>Initially we decided to write a series of plotters, with each plotter providing methods to generate a different visualisation and we designed a <code>BasePlotter</code> class to define the core methods across all plotters. These methods are: </p>
                 <ul>
-                    <li><code>standardise_data</code> and <code>_get_kc_details</code>: to clean and standardise the data, converting a Knowledge object into something that could be used by Plotly and Matplotlib.</li>
+                    <li><code>_standardise_data</code> and <code>_get_kc_details</code>: to clean and standardise the data, converting a Knowledge object into something that could be used by Plotly and Matplotlib.</li>
                     <li><code>savefig</code>: to save the visualisation to an external file.
                 </ul>
             </div>
@@ -422,7 +422,7 @@
             <div class = "col-lg-3"></div>
 
             <div>
-                <p>Since we had to generate visualisations with both plotly and Matplotlib, we also created <b>BasePlotlyPlotter</b> and <b>BaseMatplotlibPlotter</b> classes that inherit from <b>BasePlotter</b> and extend its functionality by adding methods unique to their graphing library. This way we ensured that all current and future plotters would share the same interface regardless of the library they relied on.</p>
+                <p>Since we had to generate visualisations with both Plotly and Matplotlib, we also created the <b>BasePlotlyPlotter</b> and <b>BaseMatplotlibPlotter</b> classes that inherit from <b>BasePlotter</b> and extend its functionality by adding methods unique to their respective graphing libraries. This way, we ensured that all current and future plotters would share the same interface regardless of the library they relied on.</p>
             </div>
 
             <div class = "col-lg-3"></div>
@@ -433,7 +433,7 @@
 
             <div>
                 <h3>Preparing the data</h3>
-                <p>In the&nbsp;<code>standardise_data</code> method, we convert the given&nbsp;<code>Knowledge</code> object into a Python dictionary via &nbsp;<code>knowledge_to_dict</code> method and extract information on the desired topics from all the knowledge components.</p>
+                <p>In the&nbsp;<code>_standardise_data</code> method, we convert the given&nbsp;<code>Knowledge</code> object into a Python dictionary via the &nbsp;<code>knowledge_to_dict</code> function and we extract information on the desired topics from all the knowledge components.</p>
             </div>
 
             <div class = "col-lg-3"></div>
@@ -444,11 +444,11 @@
 
             <div>
                 <h3>Plotting the data</h3>
-                <p>The contents of the plot method vary for each plotter, but they all follow a similar structure:</p>
+                <p>The contents of the&nbsp;<code>plot</code> method vary for each plotter, but they all follow the same structure:</p>
                 <ol>
-                    <li>initially, <code>standardise_data</code> is called inside plot to standardise the data.</li>
-                    <li>the desired information for each plot is filtered from the return of <code>standardise_data</code>.</li>
-                    <li>using the additional arguments passed in for customisation by the user, the visualisation is generated and stored in <code>self</code>.</li>
+                    <li>Initially, <code>_standardise_data</code> is called inside&nbsp;<code>plot</code> to clean the data.</li>
+                    <li>The data returned from <code>_standardise_data</code> is filtered to obtain the desired information to visualise in each chart.</li>
+                    <li>Using the additional arguments passed in for customisation by the user (e.g. history), the visualisation is generated and stored in <code>self</code>.</li>
                 </ol>
             </div>
 
@@ -461,8 +461,10 @@
 
             <div>
                 <h3>Saving the visualisation</h3>
-                <p>Implementing this feature was straightforward since it's the same regardless of the plotter. The only difference came when considering whether the plotter was a matplotlib of plotly plotter. Making this distinction is important as different libraries provide different formats to export to. For example, with plotly, it is possible to export to HTML but that is not the case with matplotlib. For now, the plotters are based on just matplotlib and plotly, so there are 2 variations of the savefig method:</p>
-                <p>The matplotlib one:</p>
+                <p>Implementing this feature was straightforward since it's the same regardless of the plotter. The only difference came when considering whether the plotter relied on Matplotlib or Plotly. Making this distinction is important as different libraries provide different formats to export to. For example, with Plotly it is possible to export to HTML but that is not the case for Matplotlib. For now, the plotters are based on either Matplotlib and Plotly, so there are only 2 variations of the <code>savefig</code> method:</p>
+                <ul>
+                    <li>The Matplotlib one:</li>
+                </ul>
             </div>
 
             <div class = "col-lg-3"></div>
@@ -471,7 +473,9 @@
             </div>
 
             <div>
-                <p>And the plotly one:</p>
+                <ul>
+                    <li>and the Plotly one:</li>
+                </ul>
             </div>
 
             <div class = "col-lg-3"></div>
