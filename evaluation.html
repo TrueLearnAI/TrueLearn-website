@@ -149,11 +149,14 @@
 
                         <ol>
                             <li><b>Consistency</b>: All the classifiers in truelearn library has the same and consistent
-                                interface. For training, all the classifiers have `fit` method, and for prediction, all
-                                the classifiers have `predict` and `predict_proba` function.</li>
-                            <li><b>Inspection</b>: All the classes in `truelearn.models` and `truelearn.learning` are
-                                inspectable, which means developers can inspect the internal states of these classes via
-                                either getter/setter or exposed `@property`.</li>
+                                interface. For training, all the classifiers have <code>fit</code> method, and for
+                                prediction, all the classifiers have <code>predict</code> and <code>predict_proba</code>
+                                function.</li>
+                            <li><b>Inspection</b>: All the classes in <code>truelearn.models</code> and
+                                <code>truelearn.learning</code> are inspectable, which means developers can inspect the
+                                internal states of these classes via either getter/setter or exposed
+                                <code>@property</code>.
+                            </li>
                             <li><b>Sensible Defaults</b>: Parameters are key parts of all the classifiers. To reduce the
                                 time cost of researching on different parameters for users, we provide an appropriate
                                 default value to each parameter. The default value is not necessarily the best in a
@@ -194,9 +197,11 @@
                     <div>
                         <h3>Efficiency</h3>
                         <p>Throughout our development process, we continuously looked for ways to do optimizations and
-                            do timing profiling by using `hyperfine` to study how our refactoring affects the wall clock
+                            do timing profiling by using <code>hyperfine</code> to study how our refactoring affects the
+                            wall clock
                             running time of our application. As stated in the “Testing/Performance Testing” section, we
-                            improved the running time of the `NoveltyClassifier` by about 20%, significantly reduced the
+                            improved the running time of the <code>NoveltyClassifier</code> by about 20%, significantly
+                            reduced the
                             number of memory allocations (by more 50%) and slightly decreased the overall memory
                             consumption.</p>
                         <p>Overall, we would say we did <b>Very Good</b> in this aspect.</p>
