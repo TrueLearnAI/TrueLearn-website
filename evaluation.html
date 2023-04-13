@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -13,7 +14,9 @@
     <link href="assets/img/logos/TL-logo.png" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800|Montserrat:300,400,700" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800|Montserrat:300,400,700"
+        rel="stylesheet">
 
     <!-- Vendor CSS Files -->
     <link href="assets/vendor/aos/aos.css" rel="stylesheet">
@@ -38,88 +41,279 @@
 
 
 
-<!-- ======= Header/top bar ======= -->
-<header id="header" class="d-flex align-items-center">
-    <div class="container d-flex justify-content-between">
+    <!-- ======= Header/top bar ======= -->
+    <header id="header" class="d-flex align-items-center">
+        <div class="container d-flex justify-content-between">
 
-        <div id="logo">
-            <h1><a href="index.html">True<span>Learn</span></a></h1>
-            <!-- Uncomment below if you prefer to use an image logo -->
-            <!-- <a href="index.html"><img src="assets/img/logo.png" alt=""></a>-->
+            <div id="logo">
+                <h1><a href="index.html">True<span>Learn</span></a></h1>
+                <!-- Uncomment below if you prefer to use an image logo -->
+                <!-- <a href="index.html"><img src="assets/img/logo.png" alt=""></a>-->
+            </div>
+
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li class="dropdown"><a href="index.html"><span>Home</span> <i class="bi bi-chevron-down"></i></a>
+                        <ul>
+                            <li><a class="nav-link scrollto" href="index.html#about">Abstract</a></li>
+                            <li><a class="nav-link scrollto" href="index.html#portfolio">Portfolio</a></li>
+                            <li><a class="nav-link scrollto" href="#">Project Timeline</a></li>
+                            <li><a class="nav-link scrollto" href="index.html#team">Team</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="nav-link" href="requirements.html">Requirements</a></li>
+                    <li><a class="nav-link" href="research.html">Research</a></li>
+                    <li><a class="nav-link" href="design.html">System Design</a></li>
+                    <li><a class="nav-link" href="implementation.html">Implementation</a></li>
+                    <li><a class="nav-link" href="testing.html">Testing</a></li>
+                    <li><a class="nav-link" href="evaluation.html">Evaluation</a></li>
+
+                    <li class="dropdown"><a href="appendices.html"><span>Appendices</span><i
+                                class="bi bi-chevron-down"></i></a>
+                        <ul>
+                            <li><a class="nav-link scrollto" href="#">Documentation</a> </li>
+                            <li><a class="nav-link scrollto" href="#">Development Blog</a></li>
+                            <li><a class="nav-link scrollto" href="#">Monthly Videos</a> </li>
+                            <li><a class="nav-link scrollto" href="#">License</a> </li>
+                            <li><a class="nav-link scrollto" href="#">Privacy policy</a> </li>
+                        </ul>
+                    </li>
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav><!-- .navbar -->
+
         </div>
+    </header><!-- End Header -->
 
-        <nav id="navbar" class="navbar">
-            <ul>
-                <li class="dropdown"><a href="index.html"><span>Home</span> <i class="bi bi-chevron-down"></i></a>
-                    <ul>
-                        <li><a class="nav-link scrollto" href="index.html#about">Abstract</a></li>
-                        <li><a class="nav-link scrollto" href="index.html#portfolio">Portfolio</a></li>
-                        <li><a class="nav-link scrollto" href="#">Project Timeline</a></li>
-                        <li><a class="nav-link scrollto" href="index.html#team">Team</a></li>
-                    </ul>
-                </li>
-                <li><a class="nav-link" href="requirements.html">Requirements</a></li>
-                <li><a class="nav-link" href="research.html">Research</a></li>
-                <li><a class="nav-link" href="design.html">System Design</a></li>
-                <li><a class="nav-link" href="implementation.html">Implementation</a></li>
-                <li><a class="nav-link" href="testing.html">Testing</a></li>
-                <li><a class="nav-link" href="evaluation.html">Evaluation</a></li>
-
-                <li class="dropdown"><a href="appendices.html"><span>Appendices</span><i class="bi bi-chevron-down"></i></a>
-                    <ul>
-                        <li><a class="nav-link scrollto" href="#">Documentation</a> </li>
-                        <li><a class="nav-link scrollto" href="#">Development Blog</a></li>
-                        <li><a class="nav-link scrollto" href="#">Monthly Videos</a> </li>
-                        <li><a class="nav-link scrollto" href="#">License</a> </li>
-                        <li><a class="nav-link scrollto" href="#">Privacy policy</a> </li>
-                    </ul>
-                </li>
-            </ul>
-            <i class="bi bi-list mobile-nav-toggle"></i>
-        </nav><!-- .navbar -->
-
-    </div>
-</header><!-- End Header -->
-
-<!-- ======= Banner ======= -->
-<section id="banner">
-    <div class="banner-content" data-aos="fade-up">
-        <h2>Evaluation</h2>
-    </div>
-</section>
-<!-- End Banner -->
-
-<!-- ======= Footer ======= -->
-<footer id="footer">
-    <div class="container">
-        <div class="copyright">
-            &copy; Copyright <strong>TrueLearn</strong>. All Rights Reserved
+    <!-- ======= Banner ======= -->
+    <section id="banner">
+        <div class="banner-content" data-aos="fade-up">
+            <h2>Evaluation</h2>
         </div>
-        <div class="credits">
-            <!--
+    </section>
+    <!-- End Banner -->
+    <main>
+        <section id="evaluation">
+            <div class="container" data-aos="fade-up">
+                <div class="section-header">
+                    <h2 id="model-implementation">MoSCoW Achievement Table</h2>
+                </div>
+                <div class="row">
+                    <!-- table here -->
+                    <div>
+                        <p>Key Functionalities (<b>Must Haves</b> and <b>Should Haves</b>): 100% (36/36)</p>
+                        <p>Optional Functionalities (<b>Could Haves</b>): 50% (3/6) </p>
+                        <p>Total: 93% (39/42)</p>
+                    </div>
+                </div>
+
+                <div class="section-header">
+                    <h2>List of Known Bugs</h2>
+                    <p>None.</p>
+                </div>
+
+                <div class="section-header">
+                    <h2>Individual Contribution Distribution Table</h2>
+                </div>
+                <div class="row">
+                    <!-- table here -->
+                </div>
+
+                <div class="section-header">
+                    <h2>Critical Evaluation of the Project</h2>
+                </div>
+                <div class="row">
+                    <div>
+                        <h3>User Experience</h3>
+                        <p>During the development of this project, we based our decision-making upon what users of our
+                            library are looking for.</p>
+                        <p>On the learner side, we focus on producing interpretable and insightful visualizations to
+                            track and guide their learning journey.</p>
+                        <ol>
+                            <li>We studied research papers (“What Learning Visualisations to Offer Students” by Susan
+                                Bull and “Individual and Peer Comparison Open Learner Model Visualisations to Identify
+                                What to Work On Next” by Susan Bull) on effective visualisations that students find the
+                                most helpful and understandable and finalised on nine different types of visualisations:
+                                Bar Charts, Line Charts, Dot Plots, Pie Charts, Rose Charts, Bubble Charts, Tree Maps,
+                                Radar Charts and Word Clouds. These visualisations inform users on their skill level
+                                across different subjects, the level of certainty of our prediction as well as how this
+                                has developed over time.
+                            </li>
+                            <li>We used a universal colour-scale “Greens” (which is a shade rather than several
+                                different colours) due to feedback from our client that this is this is an easily
+                                understandable way, to depict the skill level of users and its certainty level.</li>
+                        </ol>
+
+                        <p>On the developer side, we focused on adhering to design principles mentioned in our
+                            literature review, such as "Consistency", “Inspections” and “Sensible Defaults.”</p>
+
+                        <ol>
+                            <li><b>Consistency</b>: All the classifiers in truelearn library has the same and consistent
+                                interface. For training, all the classifiers have `fit` method, and for prediction, all
+                                the classifiers have `predict` and `predict_proba` function.</li>
+                            <li><b>Inspection</b>: All the classes in `truelearn.models` and `truelearn.learning` are
+                                inspectable, which means developers can inspect the internal states of these classes via
+                                either getter/setter or exposed `@property`.</li>
+                            <li><b>Sensible Defaults</b>: Parameters are key parts of all the classifiers. To reduce the
+                                time cost of researching on different parameters for users, we provide an appropriate
+                                default value to each parameter. The default value is not necessarily the best in a
+                                custom use case but provides sensible results in general. Based on our evaluation of the
+                                default values chosen in our tests, it is reasonable to say that our classifier has
+                                sensible default values.
+                            </li>
+                        </ol>
+
+                        <p>Overall, we would say we did <b>Very Good</b> in this aspect.</p>
+                    </div>
+                    <div>
+                        <h3>Functionality</h3>
+                        <p>We have always focused on the key design target, which is about modelling learners'
+                            knowledge, predicting their engagement with educational resources and providing insightful
+                            visualisations to help learners reflect on their study. We delivered 100% (36 out of 36) of
+                            the key functionalities we intended to deliver and 50% (3 out of 6) of the optional
+                            functionalities on our MoSCoW list. Without diving too deep, these include but not limited
+                            to:</p>
+                        <ul>
+                            <li>Build a model of a learner's knowledge from their learning history</li>
+                            <li>Predict learners' engagement based on their past learning events</li>
+                            <li>Create various kinds of visualizations that highlight changes in users' knowledge over
+                                time and users' understanding of different knowledge</li>
+                        </ul>
+                        <p>Overall, we would say we did <b>Very Good</b> in this aspect.</p>
+                    </div>
+                    <div>
+                        <h3>Stability</h3>
+                        <p>Throughout the development process, we followed an intensive testing procedure. We achieved
+                            100% on code coverage of core functionalities of truelearn library (models, learning,
+                            datasets, preprocessing, utils.metrics). We also deploy a list of linters that statically
+                            analyse our codebase based on different perspectives (code quality, code style,
+                            documentation style, security, type checking). All of these are checked on every commit by
+                            using CI/CD.</p>
+                        <p>Overall, we would say we did <b>Good</b> in this aspect.</p>
+                    </div>
+                    <div>
+                        <h3>Efficiency</h3>
+                        <p>Throughout our development process, we continuously looked for ways to do optimizations and
+                            do timing profiling by using `hyperfine` to study how our refactoring affects the wall clock
+                            running time of our application. As stated in the “Testing/Performance Testing” section, we
+                            improved the running time of the `NoveltyClassifier` by about 20%, significantly reduced the
+                            number of memory allocations (by more 50%) and slightly decreased the overall memory
+                            consumption.</p>
+                        <p>Overall, we would say we did <b>Very Good</b> in this aspect.</p>
+                    </div>
+                    <div>
+                        <h3>Compatibility</h3>
+                        <p>Building on top of Python, our library is naturally compatible with different operating
+                            systems (OSX, Linux, Windows). In terms of Python version support, we choose to support any
+                            Python version between 3.7 (the earliest version that has not ended its lifecycle yet) and
+                            3.11(the latest release). To ensure that these compatibility guarantees were not broken, we
+                            deploy ci checks on these 3 operating systems and these 5 Python versions, which is 3*5=15
+                            checks in total. </p>
+                        <p>For dependencies, we choose them carefully by considering their API stability, minimal Python
+                            version support (which must be Python 3.7+), and license (which must be a permissive
+                            license). This allows us to balance functionality support with our compatibility guarantees
+                            and licensing option (MIT licence).</p>
+                        <p>Overall, we would say we did <b>Very Good</b> in this aspect.</p>
+                    </div>
+                    <div>
+                        <h3>Maintainability</h3>
+                        <p>Another key aspect we prioritised was maintainability.</p>
+                        <p>We made sure that any future development would be seamless process by including comprehensive
+                            type annotations, explanations and examples for every method and class in our documentation.
+                            We also provide contributors with detailed guidelines on how to set up a Truelearn
+                            development environment, design new components, create new tests and submit PRs.</p>
+                        <p>In terms of codebase, we utilised multiple design patterns to make sure our code is easily
+                            extensible and loosely coupled. Each public method and class are tested thoroughly by using
+                            doc tests and unit tests. At the same time, we established a consistent code style in the
+                            codebase based on PEP8, Google Python Style Guide, and Black Code Style, and implemented
+                            strict ci checks (prospector-pydocstyle, typos, black), which further reduced maintenance
+                            costs.</p>
+                        <p>Overall, we would say we did <b>Very Good</b> in this aspect.</p>
+                    </div>
+                    <div>
+                        <h3>Project management</h3>
+                        <p>The team worked well together. Throughout the 15 weeks, we made sure to produce a to-do list
+                            on a weekly basis. Each task was assigned to team members alongside a deadline. We stuck to
+                            our deadlines well. We organised weekly meetings with our clients and ourselves outside of
+                            labs. Some meetings were cancelled due to train strikes or if it were not needed. Every
+                            member played their part to ensure the success of the project.</p>
+                        <p>Overall, we would say we did <b>Very Good</b> in this aspect.</p>
+                    </div>
+                </div>
+
+                <div class="section-header">
+                    <h2>Future Work</h2>
+                </div>
+                <div class="row">
+                    <ol>
+                        <li><b>Explore real-world application</b>: we intend to bring the exciting functionalities and
+                            visualisations of truelearn library to x5Learn, an open-education platform. In terms of
+                            data, x5learn has divided all videos into 5-minute segments, extracted the Wikipedia topics
+                            within each segment and was able to record user engagement through their algorithm. Thus, to
+                            integrate TrueLearn into their platform, we only need to study how to integrate our model
+                            into their backend API and database and embed visualisations into their React-based WebApp.
+                        </li>
+                        <li><b>Extend Classifiers</b>: currently, the developers can only run a simple
+                            version of TrueLearn experiments by using our library. To allow them to easily replicate the
+                            entire TrueLearn experiment, we can add supports for classifiers that are based on knowledge
+                            tracing and methods that can perform hyperparameter training.
+                        </li>
+                        <li><b>Improve Documentation</b>: we can improve the user experience of our documentation by
+                            introducing interactive code snippets that allow users to execute examples in our
+                            documentation in their browsers. To achieve this, we need to research on WASM, which allows
+                            us to run Python in browser.
+                        </li>
+                        <li><b>Explore Semantic Information</b>: currently, classifiers in truelearn library does not
+                            utilize any information between different knowledge components. For example, machine
+                            learning and linear regression are treated as different unrelated topics (but there are
+                            connections between them). In theory, the relationships between different topics give us
+                            more information about the learner and can therefore, boost the performance (accuracy,
+                            precision, recall, and f1) of the truelearn classifiers. These semantic relationships also
+                            allow us to design new visualisations. For example, we can group related topics into
+                            categories and create category-based visualisations. To achieve this, we need to integrate
+                            semantic TrueLearn https://discovery.ucl.ac.uk/id/eprint/10141501/ into our library, which
+                            entails extending the current model sub-package (storing Semantic Relatedness (SR)
+                            annotations) and implementing the semantics algorithm logic in the learning
+                            sub-package.
+                    </ol>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer">
+        <div class="container">
+            <div class="copyright">
+                &copy; Copyright <strong>TrueLearn</strong>. All Rights Reserved
+            </div>
+            <div class="credits">
+                <!--
             All the links in the footer should remain intact.
             You can delete the links only if you purchased the pro version.
             Licensing information: https://bootstrapmade.com/license/
             Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Reveal
           -->
-            <div class = "text-center">Designed by Karim Djemili</div>
-            Theme from <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                <div class="text-center">Designed by Karim Djemili</div>
+                Theme from <a href="https://bootstrapmade.com/">BootstrapMade</a>
 
+            </div>
         </div>
-    </div>
-</footer><!-- End Footer -->
+    </footer><!-- End Footer -->
 
-<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
 
-<!-- Vendor JS Files -->
-<script src="assets/vendor/aos/aos.js"></script>
-<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-<script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
-<!-- Template Main JS File -->
-<script src="assets/js/main.js"></script>
+    <!-- Template Main JS File -->
+    <script src="assets/js/main.js"></script>
 </body>
 
 </html>
